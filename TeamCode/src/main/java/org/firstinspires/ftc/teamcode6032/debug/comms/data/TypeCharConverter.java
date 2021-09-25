@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode6032.comms.data;
+package org.firstinspires.ftc.teamcode6032.debug.comms.data;
 
 /** Utility class for converting character type codes for packets into enums. */
 public class TypeCharConverter {

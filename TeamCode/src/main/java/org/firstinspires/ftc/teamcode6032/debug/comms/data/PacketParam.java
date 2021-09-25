@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode6032.comms.data;
+package org.firstinspires.ftc.teamcode6032.debug.comms.data;
 
 import org.firstinspires.ftc.teamcode6032.util.Utf8Len;
 
@@ -41,7 +41,7 @@ public class PacketParam {
 
         @Override
         public void encode(PacketParam data, DataOutputStream buf) throws IOException {
-            buf.writeChar((int) TypeCharConverter.paramTypeChar(data.type));
+            buf.writeChar(TypeCharConverter.paramTypeChar(data.type));
             switch (data.type) {
                 case FLOAT:  buf.writeFloat(data.floatData ); break;
                 case INT:    buf.writeInt  (data.intData   ); break;

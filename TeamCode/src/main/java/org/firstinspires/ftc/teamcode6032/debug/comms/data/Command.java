@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode6032.comms.data;
+package org.firstinspires.ftc.teamcode6032.debug.comms.data;
 
 import java.util.ArrayList;
 import java.util.function.Function;
@@ -53,4 +53,5 @@ abstract public class Command {
     }
 
     public abstract void handle(Packet packet);
+    public void handleResponse(Packet packet, Packet[] responses) {}
 }

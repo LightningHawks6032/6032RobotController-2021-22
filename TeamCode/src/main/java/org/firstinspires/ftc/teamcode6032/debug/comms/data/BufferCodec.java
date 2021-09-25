@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode6032.comms.data;
+package org.firstinspires.ftc.teamcode6032.debug.comms.data;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

@@ -12,7 +12,7 @@
         `<{command}{id}{nParams}{param}{param}`
 /*/
 
-package org.firstinspires.ftc.teamcode6032.comms.data;
+package org.firstinspires.ftc.teamcode6032.debug.comms.data;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -56,14 +56,14 @@ public class Packet {
     /** Enum for if the packet is a request or response. */
     public enum Type { REQUEST, RESPONSE }
 
-    protected static class Codec implements BufferCodec<Packet> {
+    public static class Codec implements BufferCodec<Packet> {
 
         @Override
         public void encode(Packet data, DataOutputStream buf) throws IOException {
             // Encode type.
             if (data.type == null)
                 throw new IllegalStateException("Cannot encode Packet without type.");
-            else buf.writeChar((int) TypeCharConverter.packetTypeChar(data.type));
+            else buf.writeChar(TypeCharConverter.packetTypeChar(data.type));
             // Encode command
             buf.writeChars(data.command.id);
             // Encode request id
