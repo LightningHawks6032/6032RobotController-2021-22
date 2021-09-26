@@ -27,6 +27,8 @@ public class PacketParam {
         stringData = stringDataIn;
     }
 
+    /** Create a packet parameter with null type. */
+    public PacketParam() { this(null,0,0,null); }
     /** Create a packet parameter with type of int. */
     public PacketParam(int dataIn) { this(Type.FLOAT,dataIn,0,null); }
     /** Create a packet parameter with type of float. */

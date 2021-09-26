@@ -14,6 +14,8 @@
 
 package org.firstinspires.ftc.teamcode6032.debug.comms.data;
 
+import org.firstinspires.ftc.teamcode6032.debug.comms.RemoteDebuggerThread;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -51,6 +53,10 @@ public class Packet {
     /** Construct a response packet to request #`requestIdIn`. */
     public Packet(int requestIdIn, Command commandIn, PacketParam[] paramsIn) {
         this(Type.RESPONSE,commandIn,paramsIn,requestIdIn);
+    }
+
+    public void respond(Command cmd, PacketParam[] param) {
+        RemoteDebuggerThread.sendPacket(new Packet(Type.RESPONSE,cmd,param,requestId));
     }
 
     /** Enum for if the packet is a request or response. */

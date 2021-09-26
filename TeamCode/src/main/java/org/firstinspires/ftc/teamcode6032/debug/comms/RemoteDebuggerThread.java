@@ -2,12 +2,14 @@ package org.firstinspires.ftc.teamcode6032.debug.comms;
 
 import org.firstinspires.ftc.teamcode6032.debug.comms.data.Packet;
 import org.firstinspires.ftc.teamcode6032.debug.comms.data.RequestInfo;
+import org.firstinspires.ftc.teamcode6032.debug.log.LogManager;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -22,11 +24,14 @@ public class RemoteDebuggerThread extends Thread {
     /** The singleton instance of this RemoteDebuggerThread. */
     private static final RemoteDebuggerThread instance = new RemoteDebuggerThread();
 
+
     private boolean running = true;
     private boolean keepOpen = false;
     private final Queue<Packet> packetsReceived = new PriorityQueue<>();
     private final Queue<Packet> packetsToSend = new PriorityQueue<>();
     private final Map<Integer, RequestInfo> requests = new HashMap<>();
+
+    private ServerSocket serverSocket;
 
     /** Begin serving running the debugger thread if it's not already connected. */
     public static void startThread() {
@@ -36,7 +41,16 @@ public class RemoteDebuggerThread extends Thread {
 
     public static void stopThread() {
         instance.running = false;
-        instance.interrupt();
+        if (instance.keepOpen) {
+            instance.keepOpen = false;
+            instance.interrupt();
+        } else {
+            try {
+                instance.serverSocket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static void closeCurrentConnection() {
@@ -44,6 +58,7 @@ public class RemoteDebuggerThread extends Thread {
         instance.interrupt();
     }
 
+    public static void sendPacket(Packet packet) {}
 
 
     // Make constructor private, only this class can instance itself.
@@ -51,18 +66,15 @@ public class RemoteDebuggerThread extends Thread {
 
     @Override
     public void run() {
+        LogManager.globalGroup.info("RemoteDebugger initialized.");
         try {
-            ServerSocket serverSocket = new ServerSocket(PORT);
-            serverSocket.setSoTimeout(1000);
+            serverSocket = new ServerSocket(PORT);
+            serverSocket.setSoTimeout(10);
             Socket s;
             while (running) {
-                try {
-                    s = serverSocket.accept();
-                } catch (SocketTimeoutException e) {
-
-                    // todo log timeout.
-                    continue;
-                }
+                try { s = serverSocket.accept(); }
+                catch (SocketTimeoutException | SocketException e) { continue; }
+                LogManager.globalGroup.info("RemoteDebugger connected.");
                 keepOpen = true;
                 DataInputStream dIn = new DataInputStream(s.getInputStream());
                 DataOutputStream dOut = new DataOutputStream(s.getOutputStream());
@@ -73,11 +85,13 @@ public class RemoteDebuggerThread extends Thread {
                     processPackets();
                     waitTick();
                 }
+                LogManager.globalGroup.info("RemoteDebugger disconnected.");
                 s.close();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        LogManager.globalGroup.info("RemoteDebugger disconnected.");
     }
 
     /** Read in all the packets that were sent to the robot */
