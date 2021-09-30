@@ -31,7 +31,7 @@ public class LogManager {
         list.add(globalGroup);
         list.addAll(groups);
         list.addAll(closedGroups);
-        return (LogGroup[]) list.toArray();
+        return list.toArray(new LogGroup[0]);
     }
     /** Get a log group by it's name */
     public static LogGroup getByName(String name) {

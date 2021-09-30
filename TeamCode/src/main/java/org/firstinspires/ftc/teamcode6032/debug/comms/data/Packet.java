@@ -69,9 +69,9 @@ public class Packet {
             // Encode type.
             if (data.type == null)
                 throw new IllegalStateException("Cannot encode Packet without type.");
-            else buf.writeChar(TypeCharConverter.packetTypeChar(data.type));
+            else buf.writeByte(TypeCharConverter.packetTypeChar(data.type));
             // Encode command
-            buf.writeChars(data.command.id);
+            buf.writeBytes(data.command.id);
             // Encode request id
             buf.writeInt(data.requestId);
             // Write int for number of params
@@ -83,7 +83,7 @@ public class Packet {
         @Override
         public Packet decode(DataInputStream buf) throws IOException {
             // Decode type.
-            Type type = TypeCharConverter.packetTypeEnum(buf.readChar());
+            Type type = TypeCharConverter.packetTypeEnum((char) buf.readByte());
             if (type == null) throw new IllegalStateException("Cannot decode Packet without type.");
             // Decode command
             byte[] cmdBytesIn = new byte[4];

@@ -32,7 +32,7 @@ public class LogsCommand extends Command {
             for (LogGroup group : groups)
                 params.add(new PacketParam(group.name));
 
-            packet.respond(get("LOGS"), (PacketParam[]) params.toArray());
+            packet.respond(get("LOGS"), params.toArray(new PacketParam[0]));
         } else { // >> 1-2 PARAMS: get logs from a group
             // Get first parameter `groupId`
             PacketParam groupIdParam = getParam(packet,0,"groupId", PacketParam.Type.STRING, true);
@@ -65,7 +65,7 @@ public class LogsCommand extends Command {
                 params.add(new PacketParam(s));
             }
 
-            packet.respond(get("LOGS"), (PacketParam[]) params.toArray());
+            packet.respond(get("LOGS"), params.toArray(new PacketParam[0]));
         }
     }
 }

@@ -58,7 +58,9 @@ public class RemoteDebuggerThread extends Thread {
         instance.interrupt();
     }
 
-    public static void sendPacket(Packet packet) {}
+    public static void sendPacket(Packet packet) {
+        instance.packetsToSend.add(packet);
+    }
 
 
     // Make constructor private, only this class can instance itself.
@@ -66,7 +68,7 @@ public class RemoteDebuggerThread extends Thread {
 
     @Override
     public void run() {
-        LogManager.globalGroup.info("RemoteDebugger initialized.");
+        LogManager.globalGroup.info("\n\n >>>>>> RemoteDebugger initialized. <<<<<<\n");
         try {
             serverSocket = new ServerSocket(PORT);
             serverSocket.setSoTimeout(10);
@@ -80,9 +82,9 @@ public class RemoteDebuggerThread extends Thread {
                 DataOutputStream dOut = new DataOutputStream(s.getOutputStream());
 
                 while (keepOpen) {
-                    sendPackets(dOut);
                     readPackets(dIn);
                     processPackets();
+                    sendPackets(dOut);
                     waitTick();
                 }
                 LogManager.globalGroup.info("RemoteDebugger disconnected.");
