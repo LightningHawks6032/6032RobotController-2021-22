@@ -1,11 +1,8 @@
 package org.firstinspires.ftc.teamcode6032.debug.comms.data;
 
-import org.firstinspires.ftc.teamcode6032.util.Utf8Len;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 public class PacketParam {
     public static final Codec codec = new Codec();
@@ -30,11 +27,11 @@ public class PacketParam {
     /** Create a packet parameter with null type. */
     public PacketParam() { this(null,0,0,null); }
     /** Create a packet parameter with type of int. */
-    public PacketParam(int dataIn) { this(Type.FLOAT,dataIn,0,null); }
+    public PacketParam(int dataIn) { this(Type.INT,dataIn,0,null); }
     /** Create a packet parameter with type of float. */
     public PacketParam(float dataIn) { this(Type.FLOAT,0,dataIn,null); }
     /** Create a packet parameter with type of string. */
-    public PacketParam(String dataIn) { this(Type.FLOAT,0,0,dataIn); }
+    public PacketParam(String dataIn) { this(Type.STRING,0,0,dataIn); }
 
     /** The type of data the param contains (for encoding). */
     public enum Type { FLOAT, INT, STRING }
@@ -43,33 +40,25 @@ public class PacketParam {
 
         @Override
         public void encode(PacketParam data, DataOutputStream buf) throws IOException {
-            buf.writeChar(TypeCharConverter.paramTypeChar(data.type));
+            buf.writeByte(TypeCharConverter.paramTypeChar(data.type));
             switch (data.type) {
                 case FLOAT:  buf.writeFloat(data.floatData ); break;
                 case INT:    buf.writeInt  (data.intData   ); break;
-                case STRING:
-                    buf.writeInt(Utf8Len.calculate(data.stringData));
-                    buf.writeUTF(data.stringData);
-                    break;
+                case STRING: buf.writeUTF  (data.stringData); break;
                 default: throw new IllegalStateException("Cannot encode PacketParam without type.");
             }
         }
 
         @Override
         public PacketParam decode(DataInputStream buf) throws IOException {
-            Type type = TypeCharConverter.paramTypeEnum(buf.readChar());
+            Type type = TypeCharConverter.paramTypeEnum((char)buf.readByte());
             if (type != null) {
                 switch (type) {
                     case FLOAT: return new PacketParam(buf.readFloat());
                     case INT: return new PacketParam(buf.readInt());
                     case STRING:
-                        // To read a string, first read in the length and then get that many bytes
-                        // and parse with utf-8 format.
-                        int byteLen = buf.readInt();
-                        byte[] dataIn = new byte[byteLen];
-                        //noinspection ResultOfMethodCallIgnored
-                        buf.read(dataIn);
-                        return new PacketParam(new String(dataIn, StandardCharsets.UTF_8));
+                        // Read string data
+                        return new PacketParam(buf.readUTF());
                 }
             }
             throw new IllegalArgumentException("Cannot decode PacketParam without valid type.");
