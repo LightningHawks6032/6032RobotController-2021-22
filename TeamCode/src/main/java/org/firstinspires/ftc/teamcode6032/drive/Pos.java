@@ -42,4 +42,8 @@ public class Pos {
     public boolean isVelocity() { return secondsPower == -1; }
     public boolean isAcceleration() { return secondsPower == -2; }
 
+
+    public Pos copy() {
+        return new Pos(x,y,r,secondsPower);
+    }
 }
