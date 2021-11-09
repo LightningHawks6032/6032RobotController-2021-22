@@ -36,6 +36,17 @@ public class Pos {
             p.secondsPower + scalarSecondsPower
         );
     }
+    public static Pos rot(Pos p, double angle, boolean dontChangeAngle) {
+        return new Pos(
+                Math.cos(angle) * p.x + Math.sin(angle) * p.y,
+                -Math.sin(angle) * p.x + Math.cos(angle) * p.y,
+                p.r + (dontChangeAngle ? 0 : angle),
+                p.secondsPower
+        );
+    }
+    public static Pos rot(Pos p, double angle) {
+        return rot(p,angle,false);
+    }
 
 
     public boolean isPosition() { return secondsPower == -0; }

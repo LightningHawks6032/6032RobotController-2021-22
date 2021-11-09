@@ -38,7 +38,7 @@ public class HardwareManager {
             mechanamMotors =  new MechanamMotors(this);
         return mechanamMotors;
     }
-    public OdometryWheels getMechanam(Pos offset, double radius) {
+    public OdometryWheels getOdometry(Pos offset, double radius) {
         if (odometryWheels == null)
             odometryWheels = new OdometryWheels(this,offset,radius);
         else
