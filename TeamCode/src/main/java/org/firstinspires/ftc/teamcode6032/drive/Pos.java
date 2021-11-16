@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode6032.drive;
 
 public class Pos {
     public static final Pos ORIGIN = new Pos(0,0,0,0);
+    public static final Pos STATIONARY = new Pos(0,0,0,-1);
 
     public final int secondsPower;
     public final double x;
@@ -17,7 +18,7 @@ public class Pos {
     }
 
     public static Pos add(Pos ...poss) {
-        if (poss.length == 0) return null;
+        if (poss.length == 0) throw new IllegalArgumentException("Pos.add must have at least one argument");
 
         int secondsPower = poss[0].secondsPower;
         double x = 0, y = 0, r = 0;
@@ -30,11 +31,24 @@ public class Pos {
         }
         return new Pos(x,y,r,secondsPower);
     }
+    public static Pos sub(Pos a, Pos b) {
+        return Pos.add(a,Pos.mul(b,-1));
+    }
     public static Pos mul(Pos p, double v, int scalarSecondsPower) {
         return new Pos(
             p.x * v, p.y * v, p.r * v,
             p.secondsPower + scalarSecondsPower
         );
+    }
+    public static Pos mul(Pos p, double v) { return mul(p,v,0); }
+    public static Pos normLoc(Pos p) {
+        return mul(p,1/locLen(p));
+    }
+    public static Pos normMechanam(Pos p) {
+        return mul(p, 1/Math.max(Math.max(p.x,p.y),p.r));
+    }
+    public static double locLen(Pos p) {
+        return Math.sqrt(dot(p,p));
     }
     public static Pos rot(Pos p, double angle, boolean dontChangeAngle) {
         return new Pos(
@@ -44,10 +58,17 @@ public class Pos {
                 p.secondsPower
         );
     }
+    public static double dot(Pos a, Pos b) {
+        return a.x*b.x + a.y*b.y;
+    }
     public static Pos rot(Pos p, double angle) {
         return rot(p,angle,false);
     }
 
+    public static Pos project(Pos source, Pos target) {
+        Pos targetNormNoRot = Pos.normLoc(new Pos(target.x,target.y,0,target.secondsPower));
+        return Pos.mul(targetNormNoRot,Pos.dot(targetNormNoRot,source));
+    }
 
     public boolean isPosition() { return secondsPower == -0; }
     public boolean isVelocity() { return secondsPower == -1; }

@@ -12,6 +12,8 @@ public class MechanamMotors {
     private final DCMotorWrapper bl;
     private final DCMotorWrapper br;
 
+    private final double motorsRotation;
+
     public static final String MOTORS_ID = "drive";
     public static class MotorIdPostfix {
         public static final String FL = "-fl";
@@ -21,26 +23,29 @@ public class MechanamMotors {
     }
 
 
-    public MechanamMotors(HardwareManager hardwareIn) {
+    public MechanamMotors(HardwareManager hardwareIn, double motorsRotationIn) {
         hardware = hardwareIn;
         fl = hardware.getMotor(MOTORS_ID+MotorIdPostfix.FL, LEFT_MOTORS_FORWARD);
         bl = hardware.getMotor(MOTORS_ID+MotorIdPostfix.BL, LEFT_MOTORS_FORWARD);
         fr = hardware.getMotor(MOTORS_ID+MotorIdPostfix.FR, !LEFT_MOTORS_FORWARD);
         br = hardware.getMotor(MOTORS_ID+MotorIdPostfix.BR, !LEFT_MOTORS_FORWARD);
+        motorsRotation = motorsRotationIn;
     }
 
     public void setPower(Pos vel) {
         if (!vel.isVelocity())
             throw new IllegalArgumentException("MechanamMotors.setPower received non velocity argument");
 
+        Pos velR = Pos.rot(vel,-motorsRotation,true);
+
         // + on +fwd (+y)
         // +FL on +strafe (+x)
         // +R on +rot (ccw)
-        double strafe = vel.x, fwd = vel.y, rot = vel.r;
+        double strafe = velR.x, fwd = velR.y, rot = velR.r;
 
-        fl.setPower(fwd + strafe - rot);
-        fr.setPower(fwd - strafe + rot);
-        bl.setPower(fwd - strafe - rot);
-        br.setPower(fwd + strafe + rot);
+        fl.setPower(fwd - strafe - rot);
+        fr.setPower(fwd + strafe + rot);
+        bl.setPower(fwd + strafe - rot);
+        br.setPower(fwd - strafe + rot);
     }
 }

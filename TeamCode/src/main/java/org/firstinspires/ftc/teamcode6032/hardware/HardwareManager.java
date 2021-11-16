@@ -33,9 +33,9 @@ public class HardwareManager {
         deadWheelList.add(motor);
         return motor;
     }
-    public MechanamMotors getMechanam() {
+    public MechanamMotors getMechanam(double rotation) {
         if (mechanamMotors == null)
-            mechanamMotors =  new MechanamMotors(this);
+            mechanamMotors =  new MechanamMotors(this,rotation);
         return mechanamMotors;
     }
     public OdometryWheels getOdometry(Pos offset, double radius) {

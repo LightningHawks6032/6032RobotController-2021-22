@@ -13,13 +13,13 @@ public class SimpleDriveTeleop extends OpMode {
 
     HardwareManager hardware;
     MechanamMotors mecha;
-    PosIntegrator posIntegrator;
+//    PosIntegrator posIntegrator;
 
     @Override
     public void init() {
         hardware = new HardwareManager(hardwareMap);
-        mecha = hardware.getMechanam();
-        posIntegrator = new PosIntegrator(hardware.getOdometry(Pos.ORIGIN,3.25));
+        mecha = hardware.getMechanam(Math.PI/2);
+//        posIntegrator = new PosIntegrator(hardware.getOdometry(Pos.ORIGIN,3.25));
     }
 
     @Override
