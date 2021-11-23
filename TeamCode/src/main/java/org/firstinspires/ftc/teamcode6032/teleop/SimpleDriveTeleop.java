@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode6032.drive.Pos;
-import org.firstinspires.ftc.teamcode6032.drive.PosIntegrator;
 import org.firstinspires.ftc.teamcode6032.hardware.HardwareManager;
 import org.firstinspires.ftc.teamcode6032.hardware.MechanamMotors;
 
@@ -27,6 +26,7 @@ public class SimpleDriveTeleop extends OpMode {
         final float fwd = gamepad1.left_stick_y;
         final float strafe = gamepad1.left_stick_x;
         final float rot = gamepad1.right_stick_x;
+
 
         final Pos vel = new Pos(
                 strafe,

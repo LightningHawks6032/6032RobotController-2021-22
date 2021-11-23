@@ -70,9 +70,13 @@ public class Pos {
         return Pos.mul(targetNormNoRot,Pos.dot(targetNormNoRot,source));
     }
 
-    public boolean isPosition() { return secondsPower == -0; }
-    public boolean isVelocity() { return secondsPower == -1; }
-    public boolean isAcceleration() { return secondsPower == -2; }
+    public double getRotCloseTo0() {
+        return r - Math.round(r/(Math.PI*2))*(Math.PI*2);
+    }
+
+    public boolean isNotPosition() { return secondsPower != -0; }
+    public boolean isNotVelocity() { return secondsPower != -1; }
+    public boolean isNotAcceleration() { return secondsPower != -2; }
 
 
     public Pos copy() {

@@ -2,15 +2,13 @@ package org.firstinspires.ftc.teamcode6032.drive;
 
 import org.firstinspires.ftc.teamcode6032.hardware.MechanamMotors;
 
-import java.util.function.Function;
-
 public class RobotTargetMover {
     private static final boolean ORIGIN_IS_PREV_TARGET = true;
     private static final double LINE_ATTRACT_POW = 2; // 2x as powerful as target attraction.
     private static final double BRAKE_DIST = 6; // 6in
     private static final double BRAKE_DIST_R = 1; // 1rad (~60deg)
-    private static final double TARGET_DIST = 1; // 6in
-    private static final double TARGET_DIST_R = .2; // .2rad (~12deg)
+    public static final double TARGET_DIST = 1; // 6in
+    public static final double TARGET_DIST_R = .2; // .2rad (~12deg)
 
     private Pos target = null;
     private boolean brake = true;
@@ -19,11 +17,9 @@ public class RobotTargetMover {
 
     public final PosIntegrator integrator;
     public final MechanamMotors mechanam;
-    private final Function<RobotTargetMover,Pos> targetGenerator;
 
-    public RobotTargetMover(PosIntegrator integratorIn, MechanamMotors mechanamIn, Function<RobotTargetMover,Pos> targetGeneratorIn) {
+    public RobotTargetMover(PosIntegrator integratorIn, MechanamMotors mechanamIn) {
         integrator = integratorIn;
-        targetGenerator = targetGeneratorIn;
         mechanam = mechanamIn;
     }
 
@@ -59,19 +55,21 @@ public class RobotTargetMover {
                 -1
         ));
 
-        if (dist < TARGET_DIST && distR < TARGET_DIST_R)
-            handleReachTarget();
     }
 
 
+    public boolean isWithinDistanceToTarget(double targetDist, double targetDistR) {
+        Pos pos = integrator.currentPos;
+        Pos toTarget = Pos.sub(target,pos);
+        double dist = Pos.locLen(toTarget), distR = toTarget.getRotCloseTo0();
 
-    private void handleReachTarget() {
-        updateOrigin();
-        target = targetGenerator.apply(this);
+        return dist < targetDist && distR < targetDistR;
+    }
+    public boolean isWithinDistanceToTarget() {
+        return isWithinDistanceToTarget(TARGET_DIST, TARGET_DIST_R);
     }
 
-
-    private void updateOrigin() {
+    public void updateOrigin() {
         origin = target;
         target = null;
         if (origin == null || !ORIGIN_IS_PREV_TARGET)

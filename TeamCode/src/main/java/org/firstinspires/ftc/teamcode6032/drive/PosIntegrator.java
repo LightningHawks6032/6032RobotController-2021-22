@@ -7,7 +7,7 @@ public class PosIntegrator {
     public OdometryWheels wheels;
 
     private void addDelta(Pos delta) {
-        if (!delta.isPosition())
+        if (delta.isNotPosition())
             throw new IllegalArgumentException("PosIntegrator.addDelta received time-scaled argument");
         currentPos = Pos.add(currentPos,Pos.rot(delta, currentPos.r, true));
     }
