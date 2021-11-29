@@ -82,4 +82,12 @@ public class Pos {
     public Pos copy() {
         return new Pos(x,y,r,secondsPower);
     }
+
+
+    public static Pos pos(double x, double y, double r) {
+        return new Pos(x,y,r,0);
+    }
+    public static Pos vel(double x, double y, double r) {
+        return new Pos(x,y,r,-1);
+    }
 }

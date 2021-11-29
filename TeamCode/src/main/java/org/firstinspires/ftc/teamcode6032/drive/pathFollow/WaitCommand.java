@@ -1,10 +1,10 @@
 package org.firstinspires.ftc.teamcode6032.drive.pathFollow;
 
-public class PathWaitCommand implements PathCommand {
+public class WaitCommand extends PathCommand {
     private double startTime;
     private final double delay;
 
-    public PathWaitCommand(double delayIn) {
+    public WaitCommand(double delayIn) {
         delay = delayIn;
     }
 
@@ -18,7 +18,4 @@ public class PathWaitCommand implements PathCommand {
     public void start(PathFollower follower) {
         startTime = follower.getTime();
     }
-
-    @Override
-    public void update(PathFollower follower) { } // nothing needs to be updated
 }

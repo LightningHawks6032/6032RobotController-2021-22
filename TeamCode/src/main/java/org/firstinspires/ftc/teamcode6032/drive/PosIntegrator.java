@@ -21,5 +21,7 @@ public class PosIntegrator {
     }
 
 
-
+    public void setCurrentPos(Pos currentPos) {
+        this.currentPos = currentPos;
+    }
 }
