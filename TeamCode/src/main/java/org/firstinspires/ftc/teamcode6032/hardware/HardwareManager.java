@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode6032.hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode6032.drive.Pos;
 
@@ -25,6 +25,11 @@ public class HardwareManager {
 
     public DCMotorWrapper getMotor(String id, boolean reverse) {
         DCMotorWrapper motor = new DCMotorWrapper(map.get(DcMotor.class, id),id,reverse);
+        motorInfoList.add(motor);
+        return motor;
+    }
+    public ServoWrapper getServo(String id, boolean reverse) {
+        ServoWrapper motor = new ServoWrapper(map.get(Servo.class, id),id,reverse);
         motorInfoList.add(motor);
         return motor;
     }
