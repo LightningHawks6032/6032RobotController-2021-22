@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode6032.hardware;
 public class GrabberArm {
     private static final boolean LIFTER_REVERSE = false;
     private static final boolean GRABBER_REVERSE = false;
-    private static final double GRABBER_MIN = 0.0;
+    private static final double GRABBER_MIN = 0.68;
     private static final double GRABBER_MAX = 1.0;
     private static final double LIFTER_SCALE = 12.0;
 
