@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode6032.drive.Pos;
+import org.firstinspires.ftc.teamcode6032.hardware.GrabberArm;
 import org.firstinspires.ftc.teamcode6032.hardware.HardwareManager;
 import org.firstinspires.ftc.teamcode6032.hardware.MechanamMotors;
 
@@ -12,12 +13,14 @@ public class SimpleDriveTeleop extends OpMode {
 
     HardwareManager hardware;
     MechanamMotors mecha;
+    GrabberArm arm;
 //    PosIntegrator posIntegrator;
 
     @Override
     public void init() {
         hardware = new HardwareManager(hardwareMap);
         mecha = hardware.getMechanam(Math.PI/2);
+        arm = new GrabberArm(hardware);
 //        posIntegrator = new PosIntegrator(hardware.getOdometry(Pos.ORIGIN,3.25));
     }
 
@@ -26,6 +29,11 @@ public class SimpleDriveTeleop extends OpMode {
         final float fwd = gamepad1.left_stick_y;
         final float strafe = gamepad1.left_stick_x;
         final float rot = gamepad1.right_stick_x;
+        final boolean slow = gamepad1.left_bumper;
+
+
+        final boolean grabOpen = gamepad1.a;
+        final float grabberPos = gamepad1.right_trigger;
 
 
         final Pos vel = new Pos(
@@ -36,5 +44,8 @@ public class SimpleDriveTeleop extends OpMode {
         );
 
         mecha.setPower(vel);
+
+        arm.setHeight(grabberPos);
+        arm.setOpen(grabOpen);
     }
 }
