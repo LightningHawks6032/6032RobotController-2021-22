@@ -46,6 +46,7 @@ public class SimpleDriveTeleop extends OpMode {
         mecha.setPower(vel);
 
         arm.setHeight(grabberPos);
+        telemetry.addLine("gpt: "+grabberPos);
         arm.setOpen(grabOpen);
     }
 }

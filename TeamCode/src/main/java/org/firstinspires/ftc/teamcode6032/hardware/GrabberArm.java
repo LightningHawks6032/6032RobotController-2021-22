@@ -22,7 +22,7 @@ public class GrabberArm {
     public GrabberArm(HardwareManager hardwareIn) {
         hardware = hardwareIn;
         lifter = hardware.getMotor(MOTORS_ID+MotorIdPostfix.LIFTER, LIFTER_REVERSE);
-        lifter.useTargetMode();
+        //lifter.useTargetMode();
         grabber = hardware.getServo(MOTORS_ID+MotorIdPostfix.GRABBER, GRABBER_REVERSE);
         grabber.setRange(GRABBER_MIN,GRABBER_MAX);
     }
