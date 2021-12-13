@@ -1,11 +1,14 @@
 package org.firstinspires.ftc.teamcode6032.hardware;
 
 public class GrabberArm {
-    private static final boolean LIFTER_REVERSE = false;
+    private static final boolean LIFTER_REVERSE = true;
     private static final boolean GRABBER_REVERSE = false;
     private static final double GRABBER_MIN = 0.68;
     private static final double GRABBER_MAX = 1.0;
     private static final double LIFTER_SCALE = 120.0;
+    private static final int LIFTER_START = 30;
+    private static final double LIFTER_SPEED = 1.2;
+
 
     private final HardwareManager hardware;
 
@@ -22,7 +25,8 @@ public class GrabberArm {
     public GrabberArm(HardwareManager hardwareIn) {
         hardware = hardwareIn;
         lifter = hardware.getMotor(MOTORS_ID+MotorIdPostfix.LIFTER, LIFTER_REVERSE);
-        //lifter.useTargetMode();
+        lifter.useTargetMode();
+        lifter.setPower(LIFTER_SPEED);
         grabber = hardware.getServo(MOTORS_ID+MotorIdPostfix.GRABBER, GRABBER_REVERSE);
         grabber.setRange(GRABBER_MIN,GRABBER_MAX);
     }
@@ -31,6 +35,6 @@ public class GrabberArm {
         grabber.setTarget(open?1:-1);
     }
     public void setHeight(double height) {
-        lifter.setTarget((int)(height*LIFTER_SCALE));
+        lifter.setTarget((int)(height*LIFTER_SCALE)+LIFTER_START);
     }
 }

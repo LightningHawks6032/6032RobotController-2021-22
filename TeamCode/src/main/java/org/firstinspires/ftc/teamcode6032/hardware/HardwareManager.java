@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode6032.hardware;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -30,6 +31,11 @@ public class HardwareManager {
     }
     public ServoWrapper getServo(String id, boolean reverse) {
         ServoWrapper motor = new ServoWrapper(map.get(Servo.class, id),id,reverse);
+        motorInfoList.add(motor);
+        return motor;
+    }
+    public CRServoWrapper getCRServo(String id, boolean reverse) {
+        CRServoWrapper motor = new CRServoWrapper(map.get(CRServo.class, id),id,reverse);
         motorInfoList.add(motor);
         return motor;
     }
