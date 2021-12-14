@@ -23,7 +23,7 @@ public class SimpleDriveTeleop extends OpMode {
     @Override
     public void init() {
         hardware = new HardwareManager(hardwareMap);
-        mecha = hardware.getMechanam(Math.PI/2);
+        mecha = hardware.getMechanam(0);
         arm = new GrabberArm(hardware);
         duckSpinner = new DuckSpinner(hardware);
 //        posIntegrator = new PosIntegrator(hardware.getOdometry(Pos.ORIGIN,3.25));
