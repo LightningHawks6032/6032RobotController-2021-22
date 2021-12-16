@@ -6,7 +6,7 @@ public class GrabberArm {
     private static final double GRABBER_MIN = 0.68;
     private static final double GRABBER_MAX = 1.0;
     private static final double LIFTER_SCALE = 120.0;
-    private static final int LIFTER_START = 30;
+    private static final int LIFTER_START = 10;
     private static final double LIFTER_SPEED = .6;
 
 
@@ -25,8 +25,9 @@ public class GrabberArm {
     public GrabberArm(HardwareManager hardwareIn) {
         hardware = hardwareIn;
         lifter = hardware.getMotor(MOTORS_ID+MotorIdPostfix.LIFTER, LIFTER_REVERSE);
-        lifter.useTargetMode();
+        lifter.setTarget(0);
         lifter.setPower(0);
+        lifter.useTargetMode();
         grabber = hardware.getServo(MOTORS_ID+MotorIdPostfix.GRABBER, GRABBER_REVERSE);
         grabber.setRange(GRABBER_MIN,GRABBER_MAX);
     }
