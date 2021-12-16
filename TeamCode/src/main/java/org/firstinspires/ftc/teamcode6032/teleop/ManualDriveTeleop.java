@@ -33,7 +33,7 @@ public class ManualDriveTeleop extends OpMode {
         final boolean slow = gamepad1.left_bumper;
 
 
-        final boolean grabOpen = gamepad2.a;
+        final boolean grabOpen = gamepad2.y;
         final float grabberPos = gamepad2.right_trigger;
         final boolean duckSpinL = gamepad2.left_bumper;
         final boolean duckSpinR = gamepad2.right_bumper;

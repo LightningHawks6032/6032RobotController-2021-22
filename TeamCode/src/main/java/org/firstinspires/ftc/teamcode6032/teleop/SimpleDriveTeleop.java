@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode6032.hardware.GrabberArm;
 import org.firstinspires.ftc.teamcode6032.hardware.HardwareManager;
 import org.firstinspires.ftc.teamcode6032.hardware.MechanamMotors;
 
-//@Disabled
+@Disabled
 @TeleOp(name="SimpleDrive", group= TeleOpNames.TEST_GROUP)
 public class SimpleDriveTeleop extends OpMode {
 

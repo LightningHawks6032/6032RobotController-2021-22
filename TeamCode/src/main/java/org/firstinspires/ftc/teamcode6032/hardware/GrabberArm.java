@@ -7,7 +7,7 @@ public class GrabberArm {
     private static final double GRABBER_MAX = 1.0;
     private static final double LIFTER_SCALE = 120.0;
     private static final int LIFTER_START = 30;
-    private static final double LIFTER_SPEED = 1.2;
+    private static final double LIFTER_SPEED = .6;
 
 
     private final HardwareManager hardware;
@@ -26,7 +26,7 @@ public class GrabberArm {
         hardware = hardwareIn;
         lifter = hardware.getMotor(MOTORS_ID+MotorIdPostfix.LIFTER, LIFTER_REVERSE);
         lifter.useTargetMode();
-        lifter.setPower(LIFTER_SPEED);
+        lifter.setPower(0);
         grabber = hardware.getServo(MOTORS_ID+MotorIdPostfix.GRABBER, GRABBER_REVERSE);
         grabber.setRange(GRABBER_MIN,GRABBER_MAX);
     }
@@ -35,6 +35,7 @@ public class GrabberArm {
         grabber.setTarget(open?1:-1);
     }
     public void setHeight(double height) {
+        lifter.setPower(LIFTER_SPEED);
         lifter.setTarget((int)(height*LIFTER_SCALE)+LIFTER_START);
     }
 }
