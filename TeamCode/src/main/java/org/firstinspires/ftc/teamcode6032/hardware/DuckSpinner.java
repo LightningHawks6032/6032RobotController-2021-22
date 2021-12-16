@@ -16,7 +16,7 @@ public class DuckSpinner {
         spinner = hardware.getCRServo(MOTOR_ID, REVERSE);
     }
 
-    public void setEnabled(boolean enabled) {
-        spinner.setPower(enabled ? SPEED : 0);
+    public void setEnabled(int dir) {
+        spinner.setPower(dir * SPEED);
     }
 }

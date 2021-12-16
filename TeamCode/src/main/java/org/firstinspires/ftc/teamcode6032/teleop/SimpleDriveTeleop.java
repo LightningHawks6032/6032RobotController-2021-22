@@ -39,7 +39,9 @@ public class SimpleDriveTeleop extends OpMode {
 
         final boolean grabOpen = gamepad1.a;
         final float grabberPos = gamepad1.right_trigger;
-        final boolean duckSpin = gamepad1.right_bumper;
+        final boolean duckSpinL = gamepad1.left_bumper;
+        final boolean duckSpinR = gamepad1.right_bumper;
+        final int duckSpin = (duckSpinL?1:0)-(duckSpinR?1:0);
 
 
         Pos vel = new Pos(
