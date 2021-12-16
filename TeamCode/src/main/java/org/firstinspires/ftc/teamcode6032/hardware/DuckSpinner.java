@@ -17,6 +17,6 @@ public class DuckSpinner {
     }
 
     public void setEnabled(int dir) {
-        spinner.setPower(dir * SPEED);
+        spinner.setPower(((float)dir) * SPEED);
     }
 }
