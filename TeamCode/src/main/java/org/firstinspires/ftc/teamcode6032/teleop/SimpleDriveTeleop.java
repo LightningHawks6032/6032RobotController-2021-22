@@ -35,6 +35,7 @@ public class SimpleDriveTeleop extends OpMode {
         final float strafe = gamepad1.left_stick_x;
         final float rot = gamepad1.right_stick_x;
         final boolean slow = gamepad1.left_bumper;
+        final boolean fast = gamepad1.right_bumper;
 
 
         final boolean grabOpen = gamepad1.a;
@@ -50,7 +51,8 @@ public class SimpleDriveTeleop extends OpMode {
                 rot,
                 -1
         );
-        if (slow) vel = Pos.mul(vel,.3);
+        if (slow) vel = Pos.mul(vel,.4);
+        if (!fast) vel = Pos.mul(vel,.7);
 
         mecha.setPower(vel);
 

@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode6032.hardware;
 
 public class DuckSpinner {
     private static final boolean REVERSE = false;
-    private static final double SPEED = 0.25;
+    private static final double SPEED = 0.8;
 
     private final HardwareManager hardware;
 
