@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode6032.hardware.vision;
+package org.firstinspires.ftc.teamcode6032.vision;
 
 import java.io.File;
 import java.io.FileWriter;
