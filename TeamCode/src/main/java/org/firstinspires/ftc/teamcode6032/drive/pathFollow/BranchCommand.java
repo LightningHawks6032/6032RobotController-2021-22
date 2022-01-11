@@ -24,9 +24,6 @@ public class BranchCommand extends PathCommand {
         follower.appendCommands(res.insertPos, Arrays.asList(pathOptions[res.branch]));
     }
 
-    public static class CallbackIn {
-        private CallbackIn() {}
-    }
     public static class CallbackOut {
         public final int insertPos;
         public final int branch;
@@ -34,9 +31,6 @@ public class BranchCommand extends PathCommand {
             this.branch = branch;
             this.insertPos = insertPos;
         }
-    }
-    private static CallbackIn callbackIn() {
-        return new CallbackIn();
     }
     public static CallbackOut callbackOut(int branch) {
         return callbackOut(branch,0);
