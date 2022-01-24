@@ -17,7 +17,6 @@ import org.firstinspires.ftc.teamcode6032.hardware.CommonHardwareInit;
 import org.firstinspires.ftc.teamcode6032.hardware.MechanamMotors;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Autonomous(name = "TestPath", group = TeleOpNames.TEST_GROUP)
@@ -31,7 +30,7 @@ public class TestPathAuto extends LinearOpMode {
         MechanamMotors mechanam = chi.mechanam;
         PosIntegrator posIntegrator = chi.posIntegrator;
 
-        PathFollower follower = new PathFollower(posIntegrator, mechanam);
+        follower = new PathFollower(posIntegrator, mechanam);
 
 
         List<PathCommand> path = new ArrayList<>();

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode6032.drive.pathFollow;
 
+import org.firstinspires.ftc.teamcode6032.drive.Pos;
 import org.firstinspires.ftc.teamcode6032.drive.PosIntegrator;
 import org.firstinspires.ftc.teamcode6032.drive.RobotTargetMover;
 import org.firstinspires.ftc.teamcode6032.hardware.MechanamMotors;
@@ -63,4 +64,7 @@ public class PathFollower {
         return commands.isEmpty();
     }
 
+    public void assertPosition(Pos pos) {
+        targetMover.integrator.setCurrentPos(pos);
+    }
 }
