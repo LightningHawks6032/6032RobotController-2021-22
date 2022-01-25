@@ -34,7 +34,7 @@ public class OdometryWheels {
 
         dwc = hardware.getDeadWheel(ODO_DEAD_WHEELS_ID+DWIdPostfix.CENTER,false);
         dwl = hardware.getDeadWheel(ODO_DEAD_WHEELS_ID+DWIdPostfix.LEFT,false);
-        dwr = hardware.getDeadWheel(ODO_DEAD_WHEELS_ID+DWIdPostfix.RIGHT,false);
+        dwr = hardware.getDeadWheel(ODO_DEAD_WHEELS_ID+DWIdPostfix.RIGHT,true);
     }
 
     public void updateSize(Pos offsetIn, double radiusIn) {
