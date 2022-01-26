@@ -43,7 +43,7 @@ public class OdometryWheels {
     }
 
     public Pos getDeltaPos() {
-        double nc = dwc.getPos(), nl = dwl.getPos(), nr = dwr.getPos();
+        double nc = dwc.getPosScaled(), nl = dwl.getPosScaled(), nr = dwr.getPosScaled();
         double dc = pc-nc, dl = pl-nl, dr = pr-nr;
         pc=nc; pl=nl; pr=nr;
         deltaPos = new Pos(

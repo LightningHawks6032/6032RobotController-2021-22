@@ -39,10 +39,14 @@ public class HardwareManager {
         motorInfoList.add(motor);
         return motor;
     }
-    public DeadWheel getDeadWheel(String id, boolean reverse) {
-        DeadWheel motor = new DeadWheel(map.get(DcMotor.class, id),id,reverse);
+    public DeadWheel getDeadWheel(String id, boolean reverse, double scale) {
+        DeadWheel motor = new DeadWheel(map.get(DcMotor.class, id),id,reverse,scale);
         deadWheelList.add(motor);
         return motor;
+    }
+    public DeadWheel getDeadWheel(String id, boolean reverse) {
+        // 1 in radius omni wheel, 8192 ticks/rev.
+        return  getDeadWheel(id,reverse,Math.PI*2f/8192f);
     }
     public MechanamMotors getMechanam(double rotation) {
         if (mechanamMotors == null)
