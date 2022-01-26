@@ -4,10 +4,13 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode6032.drive.Pos;
+import org.firstinspires.ftc.teamcode6032.drive.PosIntegrator;
+import org.firstinspires.ftc.teamcode6032.hardware.CommonHardwareInit;
 import org.firstinspires.ftc.teamcode6032.hardware.DuckSpinner;
 import org.firstinspires.ftc.teamcode6032.hardware.GrabberArm;
 import org.firstinspires.ftc.teamcode6032.hardware.HardwareManager;
 import org.firstinspires.ftc.teamcode6032.hardware.MechanamMotors;
+import org.firstinspires.ftc.teamcode6032.hardware.OdometryWheels;
 
 @TeleOp(name = "Drive")
 public class ManualDriveTeleop extends OpMode {
@@ -17,12 +20,19 @@ public class ManualDriveTeleop extends OpMode {
     GrabberArm arm;
     DuckSpinner duckSpinner;
 
+    CommonHardwareInit chi;
+    PosIntegrator posInt;
+
     @Override
     public void init() {
-        hardware = new HardwareManager(hardwareMap);
-        mecha = hardware.getMechanam(0);
+        chi = new CommonHardwareInit(hardwareMap);
+        hardware = chi.hardware;
+        mecha = chi.mechanam;
         arm = new GrabberArm(hardware);
-        duckSpinner = new DuckSpinner(hardware);
+        duckSpinner = chi.duckSpinner;
+
+        posInt = chi.posIntegrator;
+        posInt.setCurrentPos(Pos.ORIGIN);
     }
 
     @Override
@@ -48,5 +58,9 @@ public class ManualDriveTeleop extends OpMode {
 
         arm.setHeight(grabberPos);
         duckSpinner.setEnabled(duckSpin);
+
+        posInt.updatePos();
+        Pos p = posInt.currentPos;
+        telemetry.addLine("("+p.x+", "+p.y+") "+p.r+"rad");
     }
 }
