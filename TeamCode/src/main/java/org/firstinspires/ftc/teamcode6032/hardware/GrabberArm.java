@@ -2,11 +2,11 @@ package org.firstinspires.ftc.teamcode6032.hardware;
 
 public class GrabberArm {
     private static final boolean LIFTER_REVERSE = false;
-    private static final boolean GRABBER_REVERSE = false;
+    private static final boolean GRABBER_REVERSE = true;
     private static final double GRABBER_MIN = .45;
     private static final double GRABBER_MAX = 1;
     private static final double LIFTER_SCALE = 250.0;
-    private static final int LIFTER_START = 30;
+    private static final int LIFTER_START = 0;
     private static final double LIFTER_SPEED = .1;
 
 
@@ -36,7 +36,9 @@ public class GrabberArm {
         grabber.setTarget(open?1:-1);
     }
     public void setHeight(double height) {
-        lifter.setPower(LIFTER_SPEED);
+        if (height > 0 && lifter.getPosTicks() > 0.3*LIFTER_SCALE)
+            lifter.setPower(LIFTER_SPEED);
+        else lifter.setPower(0);
         lifter.setTarget((int)(height*LIFTER_SCALE)+LIFTER_START);
     }
 }
