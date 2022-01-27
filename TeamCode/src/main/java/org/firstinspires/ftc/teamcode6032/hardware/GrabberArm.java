@@ -36,7 +36,7 @@ public class GrabberArm {
         grabber.setTarget(open?1:-1);
     }
     public void setHeight(double height) {
-        if (height > 0 && lifter.getPosTicks() > 0.3*LIFTER_SCALE)
+        if (height > 0 || lifter.getPosTicks() > 0.3*LIFTER_SCALE)
             lifter.setPower(LIFTER_SPEED);
         else lifter.setPower(0);
         lifter.setTarget((int)(height*LIFTER_SCALE)+LIFTER_START);
