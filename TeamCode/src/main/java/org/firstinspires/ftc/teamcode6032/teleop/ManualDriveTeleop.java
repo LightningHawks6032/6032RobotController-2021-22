@@ -53,7 +53,7 @@ public class ManualDriveTeleop extends OpMode {
         final boolean duckSpinR = gamepad2.right_bumper;
         final int duckSpin = (duckSpinL?1:0)-(duckSpinR?1:0);
 
-        grabberHeight += grabberPosDelta*dt*0.25;
+        grabberHeight += grabberPosDelta*dt*0.8;
         grabberHeight = Math.min(Math.max(grabberHeight,0),1.7);
 
         final Pos vel = Pos.mul(
@@ -69,6 +69,7 @@ public class ManualDriveTeleop extends OpMode {
 
         posInt.updatePos();
         Pos p = posInt.currentPos;
+        telemetry.addLine(grabberHeight+"x");
         telemetry.addLine("("+p.x+", "+p.y+") "+p.r+"rad");
     }
 }
