@@ -33,8 +33,7 @@ public class MechanamMotors {
     }
 
     public void setPower(Pos vel) {
-        if (vel.isNotVelocity())
-            throw new IllegalArgumentException("MechanamMotors.setPower received non velocity argument");
+//        System.out.println("MSP [\n\t"+vel.x+"\n\t"+vel.y+"\n\t"+vel.r+"\n];");
 
         Pos velR = Pos.rot(vel,-motorsRotation,true);
 

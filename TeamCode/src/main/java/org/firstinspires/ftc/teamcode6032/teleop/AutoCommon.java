@@ -28,22 +28,22 @@ public class AutoCommon {
     }
     public static List<PathCommand> remoteEventPath(CommonHardwareInit chi) {
         List<PathCommand> p = new ArrayList<>();
-        p.add(new AssertPosCommand(new Pos(72f-7.5f,-36f,-1f*Math.PI,0)));
+        p.add(new AssertPosCommand(new Pos(72f-7.5f,-36f,-1f*Math.PI)));
 
         // 1. Measure duck [and conditional place block]
 
         // TODO: measure ducks
 
         // 2. Spin ducks.
-        p.add(new TargetCommand(new Pos(72f-7.5f-5f+1f,72f-7.5f-7.5f-1f,1f*Math.PI,0)));
+        p.add(new TargetCommand(new Pos(72f-7.5f-5f+1f,72f-7.5f-7.5f-1f,1f*Math.PI)));
         p.add(new ExecCodeCommand(()->chi.duckSpinner.setEnabled(1))); // TODO: check direction
 
 
         // 3. [@28s] Ram into warehouse
         p.add(new WaitAbsoluteCommand(28));
         p.add(new ExecCodeCommand(()->chi.duckSpinner.setEnabled(0)));
-        p.add(new TargetCommand(new Pos(48f,-36f, -1f*Math.PI, 0)));
-        p.add(new TargetCommand(new Pos(48f,36f, -1f*Math.PI, 0)));
+        p.add(new TargetCommand(new Pos(48f,-36f, -1f*Math.PI)));
+        p.add(new TargetCommand(new Pos(48f,36f, -1f*Math.PI)));
 
         return p;
     }

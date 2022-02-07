@@ -7,7 +7,7 @@ public class RobotTargetMover {
     private static final double LINE_ATTRACT_POW = 2; // 2x as powerful as target attraction.
     private static final double BRAKE_DIST = 6; // 6in
     private static final double BRAKE_DIST_R = 1; // 1rad (~60deg)
-    public static final double TARGET_DIST = 1; // 6in
+    public static final double TARGET_DIST = 1; // 1in
     public static final double TARGET_DIST_R = .2; // .2rad (~12deg)
 
     private Pos target = null;
@@ -27,7 +27,7 @@ public class RobotTargetMover {
 
     public void update() {
         if (target == null) {
-            mechanam.setPower(Pos.STATIONARY);
+            mechanam.setPower(Pos.ORIGIN);
             return;
         }
 
@@ -44,15 +44,14 @@ public class RobotTargetMover {
 
         double dist = Pos.locLen(toTarget), distR = toTarget.r;
         double speed = brake
-                ? Math.max(
+                ? Math.min( 1, Math.max(
                         (BRAKE_DIST-dist)/BRAKE_DIST,
-                        (BRAKE_DIST_R-distR)/BRAKE_DIST_R )
+                        (BRAKE_DIST_R-distR)/BRAKE_DIST_R))
                 : 1;
 
         mechanam.setPower(Pos.mul(
                 moveDir,
-                speed,
-                -1
+                speed
         ));
 
     }
@@ -76,6 +75,7 @@ public class RobotTargetMover {
             origin = integrator.currentPos;
     }
     public void setTarget(Pos target, boolean brake) {
+        updateOrigin();
         this.target = target;
         this.brake = brake;
     }

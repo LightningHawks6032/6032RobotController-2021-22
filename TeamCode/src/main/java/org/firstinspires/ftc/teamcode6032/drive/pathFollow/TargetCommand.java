@@ -10,8 +10,6 @@ public class TargetCommand extends PathCommand {
     public final double targetDistR;
 
     public TargetCommand(Pos targetIn, boolean brakeIn, double targetDistIn, double targetDistRIn) {
-        if (targetIn.isNotPosition())
-            throw new IllegalArgumentException("Path target Pos was not a position.");
         target = targetIn;
         targetDist = targetDistIn;
         targetDistR = targetDistRIn;
@@ -37,5 +35,10 @@ public class TargetCommand extends PathCommand {
     @Override
     public void start(PathFollower follower) {
         follower.targetMover.setTarget(target,brake);
+    }
+
+    @Override
+    void update(PathFollower follower) {
+        follower.targetMover.update();
     }
 }

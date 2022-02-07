@@ -49,8 +49,7 @@ public class OdometryWheels {
         deltaPos = new Pos(
                 dc,
                 (dr+dl)/2,
-                (dr-dl)/(2* radius),
-                0
+                (dr-dl)/(2* radius)
         );
         return deltaPos;
     }

@@ -15,6 +15,8 @@ public class PathFollower {
     private List<PathCommand> commands = new ArrayList<>();
     private PathCommand currentCommand = null;
 
+    public String state = "start";
+
     public PathFollower(PosIntegrator integrator, MechanamMotors mechanam) {
         targetMover = new RobotTargetMover(integrator, mechanam);
     }
@@ -48,6 +50,7 @@ public class PathFollower {
     private void nextCommand() {
         completeCommand();
         if (commands.isEmpty()) return;
+        state += "|";
         currentCommand = commands.get(0);
         commands.remove(0);
         currentCommand.start(this);

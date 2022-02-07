@@ -23,26 +23,33 @@ import java.util.List;
 public class TestPathAuto extends LinearOpMode {
 
     private PathFollower follower;
+    private CommonHardwareInit chi;
 
     @Override
     public void runOpMode() throws InterruptedException {
-        CommonHardwareInit chi = new CommonHardwareInit(hardwareMap);
+        chi = new CommonHardwareInit(hardwareMap);
         MechanamMotors mechanam = chi.mechanam;
         PosIntegrator posIntegrator = chi.posIntegrator;
 
         follower = new PathFollower(posIntegrator, mechanam);
 
-
         List<PathCommand> path = new ArrayList<>();
         path.add(new InitCommand(Pos.ORIGIN));
-        path.add(new BranchCommand(()->BranchCommand.callbackOut(0), new PathCommand[0]));
-        path.add(new NoOpCommand());
-        path.add(new WaitConditionCommand(()->true));
-        path.add(new TargetCommand(Pos.pos(0,12,0)));
-        path.add(new TargetCommand(Pos.pos(0,12,Math.PI)));
-        path.add(new TargetCommand(Pos.pos(0,24,Math.PI)));
+        path.add(new TargetCommand(new Pos(0,12,0)));
+        path.add(new TargetCommand(new Pos(0,12,Math.PI)));
         path.add(new WaitCommand(5));
-        path.add(new TargetCommand(Pos.pos(0,0,Math.PI)));
+        path.add(new TargetCommand(new Pos(0,24,Math.PI)));
+
+//        List<PathCommand> path = new ArrayList<>();
+//        path.add(new InitCommand(Pos.ORIGIN));
+//        path.add(new BranchCommand(()->BranchCommand.callbackOut(0), new PathCommand[0]));
+//        path.add(new NoOpCommand());
+//        path.add(new WaitConditionCommand(()->true));
+//        path.add(new TargetCommand(new Pos(0,12,0)));
+//        path.add(new TargetCommand(new Pos(0,12,Math.PI)));
+//        path.add(new TargetCommand(new Pos(0,24,Math.PI)));
+//        path.add(new WaitCommand(5));
+//        path.add(new TargetCommand(new Pos(0,0,Math.PI)));
 
         follower.setCommands(path);
 
@@ -60,6 +67,11 @@ public class TestPathAuto extends LinearOpMode {
             requestOpModeStop();
             return;
         }
+        telemetry.addLine(follower.state);
+        telemetry.addLine("x:"+chi.posIntegrator.currentPos.x);
+        telemetry.addLine("y:"+chi.posIntegrator.currentPos.y);
+        telemetry.addLine("r:"+chi.posIntegrator.currentPos.r);
+        telemetry.update();
         follower.update(time);
     }
 }

@@ -48,8 +48,7 @@ public class SimpleDriveTeleop extends OpMode {
         Pos vel = new Pos(
                 strafe,
                 fwd,
-                rot,
-                -1
+                rot
         );
         if (slow) vel = Pos.mul(vel,.4);
         if (!fast) vel = Pos.mul(vel,.7);
