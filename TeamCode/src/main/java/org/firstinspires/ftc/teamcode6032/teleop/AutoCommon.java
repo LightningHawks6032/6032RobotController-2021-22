@@ -7,18 +7,37 @@ import org.firstinspires.ftc.teamcode6032.drive.pathFollow.PathCommand;
 import org.firstinspires.ftc.teamcode6032.drive.pathFollow.TargetCommand;
 import org.firstinspires.ftc.teamcode6032.drive.pathFollow.WaitAbsoluteCommand;
 import org.firstinspires.ftc.teamcode6032.hardware.CommonHardwareInit;
-import org.firstinspires.ftc.teamcode6032.hardware.HardwareManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AutoCommon {
-    public static List<PathCommand> storageUnitPath(Alliance alliance) {
+    public static List<PathCommand> storageUnitPath(CommonHardwareInit chi, Alliance alliance) {
+        boolean ali = alliance == Alliance.RED; // If x is +.
+        int aSign = ali?1:-1;
+
+        List<PathCommand> p = new ArrayList<>();
+        p.add(new AssertPosCommand(new Pos(aSign*(72f-7.5f),-36f,(ali?0.5:-0.5)*Math.PI)));
+
         // 1. Measure duck, (ram duck out of way with side of robot?), place block.
+
+        // TODO: measure duck
+
+        // TODO: place block
+
         // 2. goto duck spinner, spin the duck spinner
-        // 3. at 28.5s park.
+
+        // 2. Spin ducks.
+        p.add(new TargetCommand(new Pos(aSign*(72f-7.5f-5f+1f),72f-7.5f-7.5f-1f,(ali?0:0.5)*Math.PI)));
+        p.add(new ExecCodeCommand(()->chi.duckSpinner.setEnabled(1))); // TODO: check direction
+
+        // 3. [@28s] Park in storage unit
+        p.add(new WaitAbsoluteCommand(28));
+        p.add(new ExecCodeCommand(()->chi.duckSpinner.setEnabled(0)));
+        p.add(new TargetCommand(new Pos(aSign*36,-50,(ali?0:0.5)*Math.PI)));
+
         // >end
-        return null;
+        return p;
     }
     public static List<PathCommand> warehousePath(Alliance alliance) {
         // 1. Measure duck, (ram duck out of way with side of robot?), place block.
