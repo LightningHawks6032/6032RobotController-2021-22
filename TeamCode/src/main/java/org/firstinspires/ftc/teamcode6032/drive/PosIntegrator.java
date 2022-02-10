@@ -7,7 +7,8 @@ public class PosIntegrator {
     public OdometryWheels wheels;
 
     private void addDelta(Pos delta) {
-        currentPos = Pos.add(currentPos,Pos.rot(delta, currentPos.r, true));
+        Pos d = new Pos(delta.x,-delta.y,delta.r);
+        currentPos = Pos.add(currentPos,Pos.rot(d, currentPos.r, true));
     }
 
     public PosIntegrator(OdometryWheels wheelsIn) {

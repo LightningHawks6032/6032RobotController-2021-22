@@ -22,6 +22,7 @@ public class RemoteRedAuto extends LinearOpMode {
         while (getRuntime() < 10.0) {
             time = getRuntime();
             update();
+            chi.posIntegrator.updatePos();
             //noinspection BusyWait
             Thread.sleep(1);
         }
@@ -33,5 +34,6 @@ public class RemoteRedAuto extends LinearOpMode {
             return;
         }
         follower.update(time);
+
     }
 }

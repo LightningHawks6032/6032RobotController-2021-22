@@ -5,8 +5,8 @@ import org.firstinspires.ftc.teamcode6032.hardware.MechanamMotors;
 public class RobotTargetMover {
     private static final boolean ORIGIN_IS_PREV_TARGET = true;
     private static final double LINE_ATTRACT_POW = 2; // 2x as powerful as target attraction.
-    private static final double BRAKE_DIST = 6; // 6in
-    private static final double BRAKE_DIST_R = 1; // 1rad (~60deg)
+    private static final double BRAKE_DIST = 18; // 6in
+    private static final double BRAKE_DIST_R = 2; // 2rad (~120deg)
     public static final double TARGET_DIST = 1; // 1in
     public static final double TARGET_DIST_R = .2; // .2rad (~12deg)
 
@@ -49,6 +49,8 @@ public class RobotTargetMover {
                         (BRAKE_DIST_R-distR)/BRAKE_DIST_R))
                 : 1;
 
+        System.out.println("speed:"+speed+" dist:"+dist+" distR:"+distR);
+
         mechanam.setPower(Pos.mul(
                 moveDir,
                 speed
@@ -62,7 +64,9 @@ public class RobotTargetMover {
         Pos toTarget = Pos.sub(target,pos);
         double dist = Pos.locLen(toTarget), distR = toTarget.getRotCloseTo0();
 
-        return dist < targetDist && distR < targetDistR;
+        System.out.println("Dist: "+dist+", DistR: "+distR);
+
+        return dist < targetDist && distR < Math.abs(targetDistR);
     }
     public boolean isWithinDistanceToTarget() {
         return isWithinDistanceToTarget(TARGET_DIST, TARGET_DIST_R);

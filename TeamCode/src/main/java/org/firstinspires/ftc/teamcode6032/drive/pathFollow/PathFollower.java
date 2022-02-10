@@ -30,14 +30,14 @@ public class PathFollower {
             if (commands.isEmpty())
                 throw new IllegalStateException("Should not call PathFollower.update once completed");
             else nextCommand();
-        }
-
-        while (!commands.isEmpty() && currentCommand != null) { // Execute commands
+        } else { // Execute commands
             currentCommand.update(this);
-            if (currentCommand.isComplete(this))
-                nextCommand(); // Is complete, goto next command.
-            else
-                break; // If it's not complete yet, break and wait until the next.
+            if (currentCommand.isComplete(this)) {
+                if (!commands.isEmpty())
+                    nextCommand(); // Is complete, goto next command.
+                else
+                    completeCommand();
+            }
         }
     }
 
