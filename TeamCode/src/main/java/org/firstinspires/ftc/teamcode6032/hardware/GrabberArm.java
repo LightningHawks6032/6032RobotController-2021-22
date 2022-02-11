@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode6032.hardware;
 
 public class GrabberArm {
-    private static final boolean LIFTER_REVERSE = false;
+    private static final boolean LIFTER_REVERSE = true;
     private static final boolean GRABBER_REVERSE = true;
     private static final double GRABBER_MIN = .45;
     private static final double GRABBER_MAX = 1;
@@ -13,27 +13,25 @@ public class GrabberArm {
     private final HardwareManager hardware;
 
     private final DCMotorWrapper lifter;
-    private final ServoWrapper grabber;
+    private final DCMotorWrapper grabber;
 
-    public static final String MOTORS_ID = "grab";
-    public static class MotorIdPostfix {
-        public static final String LIFTER = "-lift";
-        public static final String GRABBER = "-grab";
-    }
+    public static final String MOTOR_LIFT = "grab-lift";
+    public static final String MOTOR_SPIN = "odo-center";
 
 
     public GrabberArm(HardwareManager hardwareIn) {
         hardware = hardwareIn;
-        lifter = hardware.getMotor(MOTORS_ID+MotorIdPostfix.LIFTER, LIFTER_REVERSE);
-        lifter.setTarget(lifter.getPosTicks());
+        lifter = hardware.getMotor(MOTOR_LIFT, LIFTER_REVERSE);
+//        lifter.setTarget(lifter.getPosTicks());
+        lifter.setTarget(0);
         lifter.setPower(0);
         lifter.useTargetMode();
-        grabber = hardware.getServo(MOTORS_ID+MotorIdPostfix.GRABBER, GRABBER_REVERSE);
-        grabber.setRange(GRABBER_MIN,GRABBER_MAX);
+        grabber = hardware.getMotor(MOTOR_SPIN, GRABBER_REVERSE);
+        grabber.setPower(0);
     }
 
-    public void setOpen(boolean open) {
-        grabber.setTarget(open?1:-1);
+    public void setSpinning(int go) {
+        grabber.setPower(go);
     }
     public void setHeight(double height) {
 //        if (height > 0 || lifter.getPosTicks() > 0.3*LIFTER_SCALE)

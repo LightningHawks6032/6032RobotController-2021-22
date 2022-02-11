@@ -48,7 +48,8 @@ public class ManualDriveTeleop extends OpMode {
 
 
         final float grabberPosDelta = gamepad2.right_trigger-gamepad2.left_trigger;
-        final boolean grabberClosed = gamepad2.a;
+        final boolean grabberP = gamepad2.a;
+        final boolean grabberN = gamepad2.y;
         final boolean duckSpinL = gamepad2.left_bumper;
         final boolean duckSpinR = gamepad2.right_bumper;
         final int duckSpin = (duckSpinL?1:0)-(duckSpinR?1:0);
@@ -64,7 +65,7 @@ public class ManualDriveTeleop extends OpMode {
         mecha.setPower(vel);
 
         arm.setHeight(grabberHeight);
-        arm.setOpen(!grabberClosed);
+        arm.setSpinning((grabberP?1:0)-(grabberN?1:0));
         duckSpinner.setEnabled(duckSpin);
 
         posInt.updatePos();
