@@ -40,7 +40,8 @@ public class MechanamMotors {
         // + on +fwd (+y)
         // +FL on +strafe (+x)
         // +R on +rot (ccw)
-        double strafe = velR.x, fwd = -velR.y, rot = -velR.r;
+//        double strafe = velR.x, fwd = -velR.y, rot = -velR.r;
+        double strafe = velR.x, fwd = velR.y, rot = velR.r;
 
         fl.setPower(fwd - strafe - rot);
         fr.setPower(fwd + strafe + rot);

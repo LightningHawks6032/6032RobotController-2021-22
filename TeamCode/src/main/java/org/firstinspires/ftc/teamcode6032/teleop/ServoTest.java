@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode6032.teleop;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode6032.hardware.HardwareManager;
 import org.firstinspires.ftc.teamcode6032.hardware.ServoWrapper;
 
+@Disabled
 @TeleOp(group = TeleOpNames.TEST_GROUP, name = "ServoTester")
 public class ServoTest extends OpMode {
     private int posI = 0;
