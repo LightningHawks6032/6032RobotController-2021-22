@@ -11,13 +11,13 @@ public class CommonHardwareInit {
     public final OdometryWheels odometry;
     public final PosIntegrator posIntegrator;
 
-    public final DuckSpinner duckSpinner;
+//    public final DuckSpinner duckSpinner;
 
     public CommonHardwareInit(HardwareMap hardwareMap) {
         hardware = new HardwareManager(hardwareMap);
         mechanam = hardware.getMechanam(0);
-        odometry = hardware.getOdometry(new Pos(0f,1f,0f), 4.5f);
+        odometry = hardware.getOdometry(new Pos(0f,0f,0f), 5f);
         posIntegrator = new PosIntegrator(odometry);
-        duckSpinner = new DuckSpinner(hardware);
+//        duckSpinner = new DuckSpinner(hardware);
     }
 }

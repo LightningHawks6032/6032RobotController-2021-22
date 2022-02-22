@@ -20,21 +20,15 @@ public class OdometryWheels {
 
     private Pos deltaPos = Pos.ORIGIN;
 
-    public static final String ODO_DEAD_WHEELS_ID = "odo";
-    public static class DWIdPostfix {
-        public static final String CENTER = "-center";
-        public static final String LEFT = "-left";
-        public static final String RIGHT = "-right";
-    }
 
     public OdometryWheels(HardwareManager hardwareManager, Pos offsetIn, double radiusIn) {
         hardware = hardwareManager;
         offset = offsetIn.copy();
         radius = radiusIn;
 
-        dwc = hardware.getDeadWheel(ODO_DEAD_WHEELS_ID+DWIdPostfix.CENTER,false);
-        dwl = hardware.getDeadWheel(ODO_DEAD_WHEELS_ID+DWIdPostfix.LEFT,false);
-        dwr = hardware.getDeadWheel(ODO_DEAD_WHEELS_ID+DWIdPostfix.RIGHT,true);
+        dwc = hardware.getDeadWheel(HardwareIds.ODO_C,HardwareIds.ODO_C_REVERSE);
+        dwl = hardware.getDeadWheel(HardwareIds.ODO_L,HardwareIds.ODO_L_REVERSE);
+        dwr = hardware.getDeadWheel(HardwareIds.ODO_R,HardwareIds.ODO_R_REVERSE);
     }
 
     public void updateSize(Pos offsetIn, double radiusIn) {
@@ -49,8 +43,9 @@ public class OdometryWheels {
         deltaPos = new Pos(
                 dc,
                 (dr+dl)/2,
-                (dr-dl)/(2* radius)
+                (dr-dl)/(2*radius)
         );
+//        deltaPos = new Pos(dc,dl,dr);
         return deltaPos;
     }
 }

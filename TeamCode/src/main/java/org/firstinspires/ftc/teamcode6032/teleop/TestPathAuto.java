@@ -40,10 +40,10 @@ public class TestPathAuto extends LinearOpMode {
 //        path.add(new TargetCommand(new Pos(0,0,Math.PI/2)));
 //        path.add(new TargetCommand(new Pos(0,60,0)));
         path.add(new WaitAbsoluteCommand(2));
-        path.add(new ExecCodeCommand(()->chi.duckSpinner.setEnabled(1)));
+//        path.add(new ExecCodeCommand(()->chi.duckSpinner.setEnabled(1)));
 
         path.add(new WaitCommand(3));
-        path.add(new ExecCodeCommand(()->chi.duckSpinner.setEnabled(0)));
+//        path.add(new ExecCodeCommand(()->chi.duckSpinner.setEnabled(0)));
         path.add(new WaitCommand(3));
 //        path.add(new TargetCommand(new Pos(0,12,Math.PI)));
 //        path.add(new WaitCommand(5));

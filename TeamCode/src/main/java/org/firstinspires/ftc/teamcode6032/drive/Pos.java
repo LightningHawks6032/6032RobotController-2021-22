@@ -48,8 +48,8 @@ public class Pos {
     }
     public static Pos rot(Pos p, double angle, boolean dontChangeAngle) {
         return new Pos(
-                Math.cos(angle) * p.x + Math.sin(angle) * p.y,
-               -Math.sin(angle) * p.x + Math.cos(angle) * p.y,
+                Math.cos(angle) * p.x - Math.sin(angle) * p.y,
+                Math.sin(angle) * p.x + Math.cos(angle) * p.y,
                 p.r + (dontChangeAngle ? 0 : angle)
         );
     }

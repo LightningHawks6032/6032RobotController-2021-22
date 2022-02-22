@@ -23,17 +23,17 @@ public class AutoCommon {
 
         // TODO: measure duck
 
-        // TODO: place block
+        // TO DO: place block
 
         // 2. goto duck spinner, spin the duck spinner
 
         // 2. Spin ducks.
         p.add(new TargetCommand(new Pos(aSign*(72f-7.5f-5f+1f),72f-7.5f-7.5f-1f,(ali?0:0.5)*Math.PI)));
-        p.add(new ExecCodeCommand(()->chi.duckSpinner.setEnabled(1))); // TODO: check direction
+//        p.add(new ExecCodeCommand(()->chi.duckSpinner.setEnabled(1))); // TO DO: check direction
 
         // 3. [@28s] Park in storage unit
         p.add(new WaitAbsoluteCommand(28));
-        p.add(new ExecCodeCommand(()->chi.duckSpinner.setEnabled(0)));
+//        p.add(new ExecCodeCommand(()->chi.duckSpinner.setEnabled(0)));
         p.add(new TargetCommand(new Pos(aSign*36,-50,(ali?0:0.5)*Math.PI)));
 
         // >end
@@ -51,16 +51,16 @@ public class AutoCommon {
 
         // 1. Measure duck [and conditional place block]
 
-        // TODO: measure ducks
+        // TO DO: measure ducks
 
         // 2. Spin ducks.
         p.add(new TargetCommand(new Pos(72f-7.5f-5f+1f,72f-7.5f-7.5f-1f,1f*Math.PI)));
-        p.add(new ExecCodeCommand(()->chi.duckSpinner.setEnabled(1))); // TODO: check direction
+//        p.add(new ExecCodeCommand(()->chi.duckSpinner.setEnabled(1))); // TO DO: check direction
 
 
         // 3. [@28s] Ram into warehouse
         p.add(new WaitAbsoluteCommand(28));
-        p.add(new ExecCodeCommand(()->chi.duckSpinner.setEnabled(0)));
+//        p.add(new ExecCodeCommand(()->chi.duckSpinner.setEnabled(0)));
         p.add(new TargetCommand(new Pos(48f,-36f, -1f*Math.PI)));
         p.add(new TargetCommand(new Pos(48f,36f, -1f*Math.PI)));
 

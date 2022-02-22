@@ -8,17 +8,16 @@ public class DeadWheel {
     public final String motorId;
     public final double scale;
 
+    public final boolean isReversed;
+
     public DeadWheel(DcMotor motorIn, String id, boolean reverse, double posScale) {
         motor = motorIn;
         motorId = id;
-        motor.setDirection(reverse ?
-                DcMotorSimple.Direction.REVERSE :
-                DcMotorSimple.Direction.FORWARD
-        );
         scale = posScale;
+        isReversed = reverse;
     }
 
-    public int getPos() { return motor.getCurrentPosition(); }
+    public int getPos() { return motor.getCurrentPosition()*(getIsReversed()!=isReversed?-1:1); }
     public double getPosScaled() { return getPos()*scale; }
     public boolean getIsReversed() { return motor.getDirection() == DcMotorSimple.Direction.REVERSE; }
     public String getMotorId() { return motorId; }

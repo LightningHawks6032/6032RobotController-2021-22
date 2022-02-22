@@ -3,32 +3,22 @@ package org.firstinspires.ftc.teamcode6032.hardware;
 import org.firstinspires.ftc.teamcode6032.drive.Pos;
 
 public class MechanamMotors {
-    private static final boolean LEFT_MOTORS_FORWARD = false;
-
     private final HardwareManager hardware;
 
-    private final DCMotorWrapper fl;
-    private final DCMotorWrapper fr;
-    private final DCMotorWrapper bl;
-    private final DCMotorWrapper br;
+    public final DCMotorWrapper fl;
+    public final DCMotorWrapper fr;
+    public final DCMotorWrapper bl;
+    public final DCMotorWrapper br;
 
     private final double motorsRotation;
-
-    public static final String MOTORS_ID = "drive";
-    public static class MotorIdPostfix {
-        public static final String FL = "-fl";
-        public static final String FR = "-fr";
-        public static final String BL = "-bl";
-        public static final String BR = "-br";
-    }
 
 
     public MechanamMotors(HardwareManager hardwareIn, double motorsRotationIn) {
         hardware = hardwareIn;
-        fl = hardware.getMotor(MOTORS_ID+MotorIdPostfix.FL, LEFT_MOTORS_FORWARD);
-        bl = hardware.getMotor(MOTORS_ID+MotorIdPostfix.BL, LEFT_MOTORS_FORWARD);
-        fr = hardware.getMotor(MOTORS_ID+MotorIdPostfix.FR, !LEFT_MOTORS_FORWARD);
-        br = hardware.getMotor(MOTORS_ID+MotorIdPostfix.BR, !LEFT_MOTORS_FORWARD);
+        fl = hardware.getMotor(HardwareIds.DRIVE_MOTOR_FL,  HardwareIds.DRIVE_MOTOR_REVERSE);
+        bl = hardware.getMotor(HardwareIds.DRIVE_MOTOR_BL,  HardwareIds.DRIVE_MOTOR_REVERSE);
+        fr = hardware.getMotor(HardwareIds.DRIVE_MOTOR_FR, !HardwareIds.DRIVE_MOTOR_REVERSE);
+        br = hardware.getMotor(HardwareIds.DRIVE_MOTOR_BR, !HardwareIds.DRIVE_MOTOR_REVERSE);
         motorsRotation = motorsRotationIn;
     }
 
@@ -43,9 +33,9 @@ public class MechanamMotors {
 //        double strafe = velR.x, fwd = -velR.y, rot = -velR.r;
         double strafe = velR.x, fwd = velR.y, rot = velR.r;
 
-        fl.setPower(fwd - strafe - rot);
-        fr.setPower(fwd + strafe + rot);
-        bl.setPower(fwd + strafe - rot);
-        br.setPower(fwd - strafe + rot);
+        fl.setPower(fwd + strafe - rot);
+        fr.setPower(fwd - strafe + rot);
+        bl.setPower(fwd - strafe - rot);
+        br.setPower(fwd + strafe + rot);
     }
 }
