@@ -16,7 +16,7 @@ public class CommonHardwareInit {
     public CommonHardwareInit(HardwareMap hardwareMap) {
         hardware = new HardwareManager(hardwareMap);
         mechanam = hardware.getMechanam(0);
-        odometry = hardware.getOdometry(new Pos(0f,0f,0f), 5f);
+        odometry = hardware.getOdometry(new Pos(0f,0f,0f), 5.125f);
         posIntegrator = new PosIntegrator(odometry);
 //        duckSpinner = new DuckSpinner(hardware);
     }

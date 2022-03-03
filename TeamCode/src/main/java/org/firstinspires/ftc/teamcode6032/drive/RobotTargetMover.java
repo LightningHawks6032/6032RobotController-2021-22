@@ -4,13 +4,16 @@ import org.firstinspires.ftc.teamcode6032.hardware.MechanamMotors;
 
 public class RobotTargetMover {
     private static final boolean ORIGIN_IS_PREV_TARGET = true;
-    private static final double LINE_ATTRACT_POW = 2; // 2x as powerful as target attraction.
-    private static final double BRAKE_DIST = 18; // 6in
-    private static final double BRAKE_DIST_R = 2; // 2rad (~120deg)
-    public static final double TARGET_DIST = 1; // 1in
-    public static final double TARGET_DIST_R = .2; // .2rad (~12deg)
+    private static final double LINE_ATTRACT_POW = 0; // 2x as powerful as target attraction.
+    private static final double BRAKE_DIST = 16; // 16in
+    private static final double BRAKE_DIST_R = 1; // 1rad (~120deg)
+    public static final double TARGET_DIST = .5; // .5in
+    public static final double TARGET_DIST_R = .075; // .075rad (~4deg)
+    public static final double MAX_ACC = 5.0; // 5.0 speed unit/sec
+    public static final double MAX_ACC_R = Math.PI*2; // 2pi rad/s^2
 
     private Pos target = null;
+    private Pos vel = Pos.ORIGIN;
     private boolean brake = true;
 
     private Pos origin = null;
@@ -24,8 +27,11 @@ public class RobotTargetMover {
     }
 
 
-
+    @Deprecated
     public void update() {
+        update(0);
+    }
+    public void update(double dt) {
         if (target == null) {
             mechanam.setPower(Pos.ORIGIN);
             return;
@@ -37,25 +43,35 @@ public class RobotTargetMover {
         Pos toLine = Pos.project(lineNormal,Pos.sub(origin,pos));
         Pos toTarget = Pos.sub(target,pos);
 
-        Pos moveDir = Pos.normMechanam(Pos.add(
-                Pos.mul(toTarget,1),
-                Pos.mul(toLine,LINE_ATTRACT_POW)
-        ));
+        Pos moveDir = Pos.normMechanam(//Pos.add(
+                Pos.mul(toTarget,1)//,
+//                Pos.mul(toLine,LINE_ATTRACT_POW)
+        );
 
-        double dist = Pos.locLen(toTarget), distR = toTarget.r;
-        double speed = brake
-                ? Math.min( 1, Math.max(
-                        (BRAKE_DIST-dist)/BRAKE_DIST,
-                        (BRAKE_DIST_R-distR)/BRAKE_DIST_R))
-                : 1;
+        double distT = Pos.locLen(toTarget)-TARGET_DIST;
+        double distR = Math.abs(toTarget.r)-TARGET_DIST_R;
+        double speedT = brake ? Math.min( 1, distT/BRAKE_DIST) : 1;
+        double speedR = brake ? Math.min( 1, distR/BRAKE_DIST_R) : 1;
 
-        System.out.println("speed:"+speed+" dist:"+dist+" distR:"+distR);
+        if (distT <= 0) speedT = 0;
+        if (distR <= 0) speedR = 0;
 
-        mechanam.setPower(Pos.mul(
+
+
+        Pos newVel = Pos.mulComp(
                 moveDir,
-                speed
-        ));
+                new Pos(speedT,speedT,speedR)
+        );
+        Pos acc = Pos.mul(Pos.sub(newVel,vel),1.0/dt);
+        acc = new Pos(
+                Math.min(Math.max(acc.x,-MAX_ACC),MAX_ACC),
+                Math.min(Math.max(acc.y,-MAX_ACC),MAX_ACC),
+                Math.min(Math.max(acc.r,-MAX_ACC_R),MAX_ACC_R)
+        );
+        vel = Pos.add(vel,Pos.mul(acc,dt));
 
+
+        mechanam.setPower(Pos.rot(Pos.minCutoff(vel,.075,.05),-pos.r,true));
     }
 
 

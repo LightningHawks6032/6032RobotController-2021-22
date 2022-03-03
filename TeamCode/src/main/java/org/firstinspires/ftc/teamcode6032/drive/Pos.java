@@ -33,15 +33,25 @@ public class Pos {
             p.x * v, p.y * v, p.r * v
         );
     }
+    public static Pos mulComp(Pos a, Pos b) {
+        return new Pos(a.x*b.x,a.y*b.y,a.r*b.r);
+    }
     public static Pos normLoc(Pos p) {
         double len = locLen(p);
         if (len < 0.001) return Pos.ORIGIN;
         return mul(p,1/len);
     }
     public static Pos normMechanam(Pos p) {
-        double len = Math.max(Math.max(Math.abs(p.x),Math.abs(p.y)),Math.abs(p.r));
-        if (len < 0.001) return Pos.ORIGIN;
-        return mul(p, 1/len);
+        double lenT = Math.max(Math.abs(p.x),Math.abs(p.y)), lenR = Math.abs(p.r);
+        if (lenT < 0.001) lenT = 0; else lenT = 1.0/lenT;
+        if (lenR < 0.001) lenR = 0; else lenR = 1.0/lenR;
+        return mulComp(p, new Pos(lenT,lenT,lenR));
+    }
+    public static Pos minCutoff(Pos p,double cutoff,double cutoffR) {
+        double lenT = Math.max(Math.abs(p.x),Math.abs(p.y)), lenR = Math.abs(p.r);
+        if (lenT < cutoff) lenT = 0; else lenT = 1;
+        if (lenR < cutoffR) lenR = 0; else lenR = 1;
+        return mulComp(p, new Pos(lenT,lenT,lenR));
     }
     public static double locLen(Pos p) {
         return Math.sqrt(dot(p,p));
