@@ -1,7 +1,10 @@
-package org.firstinspires.ftc.teamcode6032.hardware;
+package org.firstinspires.ftc.teamcode6032.hardware.wrapper;
 
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
+import org.firstinspires.ftc.teamcode6032.hardware.IMotorInfo;
+import org.firstinspires.ftc.teamcode6032.hardware.MotorInfoType;
 
 public class CRServoWrapper implements IMotorInfo {
     public final CRServo motor;

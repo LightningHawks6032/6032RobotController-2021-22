@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode6032.hardware.HardwareManager;
-import org.firstinspires.ftc.teamcode6032.hardware.ServoWrapper;
+import org.firstinspires.ftc.teamcode6032.hardware.wrapper.ServoWrapper;
 
 @Disabled
 @TeleOp(group = TeleOpNames.TEST_GROUP, name = "ServoTester")

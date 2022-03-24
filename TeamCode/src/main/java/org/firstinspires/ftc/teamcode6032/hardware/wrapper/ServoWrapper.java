@@ -1,6 +1,9 @@
-package org.firstinspires.ftc.teamcode6032.hardware;
+package org.firstinspires.ftc.teamcode6032.hardware.wrapper;
 
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.teamcode6032.hardware.IMotorInfo;
+import org.firstinspires.ftc.teamcode6032.hardware.MotorInfoType;
 
 public class ServoWrapper implements IMotorInfo {
     public final Servo motor;

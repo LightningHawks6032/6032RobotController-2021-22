@@ -4,29 +4,18 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode6032.drive.Pos;
-import org.firstinspires.ftc.teamcode6032.hardware.DuckSpinner;
-import org.firstinspires.ftc.teamcode6032.hardware.GrabberArm;
-import org.firstinspires.ftc.teamcode6032.hardware.HardwareManager;
-import org.firstinspires.ftc.teamcode6032.hardware.MechanamMotors;
+import org.firstinspires.ftc.teamcode6032.drive.Vec;
+import org.firstinspires.ftc.teamcode6032.hardware.HardwareCommon;
 
 @Disabled
 @TeleOp(name="SimpleDrive", group= TeleOpNames.TEST_GROUP)
 public class SimpleDriveTeleop extends OpMode {
 
-    HardwareManager hardware;
-    MechanamMotors mecha;
-    GrabberArm arm;
-    DuckSpinner duckSpinner;
-//    PosIntegrator posIntegrator;
+    HardwareCommon hardware;
 
     @Override
     public void init() {
-        hardware = new HardwareManager(hardwareMap);
-        mecha = hardware.getMechanam(0);
-        arm = new GrabberArm(hardware);
-        duckSpinner = new DuckSpinner(hardware);
-//        posIntegrator = new PosIntegrator(hardware.getOdometry(Pos.ORIGIN,3.25));
+        hardware = new HardwareCommon(hardwareMap, this::getRuntime);
     }
 
     @Override
@@ -45,19 +34,19 @@ public class SimpleDriveTeleop extends OpMode {
         final int duckSpin = (duckSpinL?1:0)-(duckSpinR?1:0);
 
 
-        Pos vel = new Pos(
+        Vec vel = new Vec(
                 strafe,
                 fwd,
                 rot
         );
-        if (slow) vel = Pos.mul(vel,.4);
-        if (!fast) vel = Pos.mul(vel,.7);
+        if (slow) vel = Vec.mul(vel,.4);
+        if (!fast) vel = Vec.mul(vel,.7);
 
-        mecha.setPower(vel);
+        hardware.mechanam.setPower(vel);
 
-        arm.setHeight(grabberPos);
-        arm.setSpinning(0);
-        duckSpinner.setEnabled(duckSpin);
+//        arm.setHeight(grabberPos);
+//        arm.setSpinning(0);
+//        duckSpinner.setEnabled(duckSpin);
         telemetry.addLine("gpt: "+grabberPos+"; ds: "+duckSpin+"; go: "+grabOpen);
     }
 }

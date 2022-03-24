@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode6032.drive;
 
-import org.firstinspires.ftc.teamcode6032.hardware.MechanamMotors;
+import org.firstinspires.ftc.teamcode6032.hardware.subassembelyControl.core.MechanamMotors;
 
 public class RobotTargetMover {
     private static final boolean ORIGIN_IS_PREV_TARGET = true;
@@ -12,11 +12,11 @@ public class RobotTargetMover {
     public static final double MAX_ACC = 5.0; // 5.0 speed unit/sec
     public static final double MAX_ACC_R = Math.PI*2; // 2pi rad/s^2
 
-    private Pos target = null;
-    private Pos vel = Pos.ORIGIN;
+    private Vec target = null;
+    private Vec vel = Vec.ORIGIN;
     private boolean brake = true;
 
-    private Pos origin = null;
+    private Vec origin = null;
 
     public final PosIntegrator integrator;
     public final MechanamMotors mechanam;
@@ -33,22 +33,22 @@ public class RobotTargetMover {
     }
     public void update(double dt) {
         if (target == null) {
-            mechanam.setPower(Pos.ORIGIN);
+            mechanam.setPower(Vec.ORIGIN);
             return;
         }
 
-        Pos pos = integrator.currentPos;
-        Pos lineNormal = Pos.rot(Pos.normLoc(Pos.sub(origin,target)),Math.PI/2);
+        Vec pos = integrator.currentPos;
+        Vec lineNormal = Vec.rot(Vec.normLoc(Vec.sub(origin,target)),Math.PI/2);
         // The direction to the line of travel.
-        Pos toLine = Pos.project(lineNormal,Pos.sub(origin,pos));
-        Pos toTarget = Pos.sub(target,pos);
+        Vec toLine = Vec.project(lineNormal, Vec.sub(origin,pos));
+        Vec toTarget = Vec.sub(target,pos);
 
-        Pos moveDir = Pos.normMechanam(//Pos.add(
-                Pos.mul(toTarget,1)//,
+        Vec moveDir = Vec.normMechanam(//Pos.add(
+                Vec.mul(toTarget,1)//,
 //                Pos.mul(toLine,LINE_ATTRACT_POW)
         );
 
-        double distT = Pos.locLen(toTarget)-TARGET_DIST;
+        double distT = Vec.locLen(toTarget)-TARGET_DIST;
         double distR = Math.abs(toTarget.r)-TARGET_DIST_R;
         double speedT = brake ? Math.min( 1, distT/BRAKE_DIST) : 1;
         double speedR = brake ? Math.min( 1, distR/BRAKE_DIST_R) : 1;
@@ -58,27 +58,27 @@ public class RobotTargetMover {
 
 
 
-        Pos newVel = Pos.mulComp(
+        Vec newVel = Vec.mulComp(
                 moveDir,
-                new Pos(speedT,speedT,speedR)
+                new Vec(speedT,speedT,speedR)
         );
-        Pos acc = Pos.mul(Pos.sub(newVel,vel),1.0/dt);
-        acc = new Pos(
+        Vec acc = Vec.mul(Vec.sub(newVel,vel),1.0/dt);
+        acc = new Vec(
                 Math.min(Math.max(acc.x,-MAX_ACC),MAX_ACC),
                 Math.min(Math.max(acc.y,-MAX_ACC),MAX_ACC),
                 Math.min(Math.max(acc.r,-MAX_ACC_R),MAX_ACC_R)
         );
-        vel = Pos.add(vel,Pos.mul(acc,dt));
+        vel = Vec.add(vel, Vec.mul(acc,dt));
 
 
-        mechanam.setPower(Pos.rot(Pos.minCutoff(vel,.075,.05),-pos.r,true));
+        mechanam.setPower(Vec.rot(Vec.minCutoff(vel,.075,.05),-pos.r,true));
     }
 
 
     public boolean isWithinDistanceToTarget(double targetDist, double targetDistR) {
-        Pos pos = integrator.currentPos;
-        Pos toTarget = Pos.sub(target,pos);
-        double dist = Pos.locLen(toTarget), distR = toTarget.getRotCloseTo0();
+        Vec pos = integrator.currentPos;
+        Vec toTarget = Vec.sub(target,pos);
+        double dist = Vec.locLen(toTarget), distR = toTarget.getRotCloseTo0();
 
         System.out.println("Dist: "+dist+", DistR: "+distR);
 
@@ -94,7 +94,7 @@ public class RobotTargetMover {
         if (origin == null || !ORIGIN_IS_PREV_TARGET)
             origin = integrator.currentPos;
     }
-    public void setTarget(Pos target, boolean brake) {
+    public void setTarget(Vec target, boolean brake) {
         updateOrigin();
         this.target = target;
         this.brake = brake;

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode6032.drive.pathFollow;
 
+@Deprecated
 public class ExecCodeCommand extends PathCommand {
     Runnable callback;
     public ExecCodeCommand(Runnable callbackIn) {

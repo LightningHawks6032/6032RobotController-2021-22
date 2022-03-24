@@ -1,21 +1,22 @@
 package org.firstinspires.ftc.teamcode6032.drive.pathFollow;
 
-import org.firstinspires.ftc.teamcode6032.drive.Pos;
+import org.firstinspires.ftc.teamcode6032.drive.Vec;
 import org.firstinspires.ftc.teamcode6032.drive.RobotTargetMover;
 
+@Deprecated
 public class TargetCommand extends PathCommand {
-    private final Pos target;
+    private final Vec target;
     private final boolean brake;
     public final double targetDist;
     public final double targetDistR;
 
-    public TargetCommand(Pos targetIn, boolean brakeIn, double targetDistIn, double targetDistRIn) {
+    public TargetCommand(Vec targetIn, boolean brakeIn, double targetDistIn, double targetDistRIn) {
         target = targetIn;
         targetDist = targetDistIn;
         targetDistR = targetDistRIn;
         brake = brakeIn;
     }
-    public TargetCommand(Pos target, boolean brake, double targetDistScale) {
+    public TargetCommand(Vec target, boolean brake, double targetDistScale) {
         this(
                 target,
                 brake,
@@ -23,7 +24,7 @@ public class TargetCommand extends PathCommand {
                 RobotTargetMover.TARGET_DIST_R*targetDistScale
         );
     }
-    public TargetCommand(Pos target) {
+    public TargetCommand(Vec target) {
         this(target,true,1);
     }
 

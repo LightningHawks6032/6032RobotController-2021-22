@@ -4,6 +4,7 @@ import org.firstinspires.ftc.teamcode6032.util.PollCallback;
 
 import java.util.Arrays;
 
+@Deprecated
 public class BranchCommand extends PathCommand {
     private final PathCommand[][] pathOptions;
     private final PollCallback<CallbackOut> callback;

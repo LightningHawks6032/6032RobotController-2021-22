@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode6032.drive.pathFollow;
 
-
+@Deprecated
 public class WaitAbsoluteCommand extends PathCommand {
     private final double endTime;
 

@@ -1,6 +1,9 @@
-package org.firstinspires.ftc.teamcode6032.hardware;
+package org.firstinspires.ftc.teamcode6032.hardware.subassembelyControl.core;
 
-import org.firstinspires.ftc.teamcode6032.drive.Pos;
+import org.firstinspires.ftc.teamcode6032.drive.Vec;
+import org.firstinspires.ftc.teamcode6032.hardware.HardwareIds;
+import org.firstinspires.ftc.teamcode6032.hardware.HardwareManager;
+import org.firstinspires.ftc.teamcode6032.hardware.wrapper.DCMotorWrapper;
 
 public class MechanamMotors {
     private final HardwareManager hardware;
@@ -22,10 +25,10 @@ public class MechanamMotors {
         motorsRotation = motorsRotationIn;
     }
 
-    public void setPower(Pos vel) {
+    public void setPower(Vec vel) {
 //        System.out.println("MSP [\n\t"+vel.x+"\n\t"+vel.y+"\n\t"+vel.r+"\n];");
 
-        Pos velR = Pos.rot(vel,-motorsRotation,true);
+        Vec velR = Vec.rot(vel,-motorsRotation,true);
 
         // + on +fwd (+y)
         // +FL on +strafe (+x)

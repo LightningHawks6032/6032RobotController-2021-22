@@ -1,11 +1,12 @@
 package org.firstinspires.ftc.teamcode6032.drive.pathFollow;
 
-import org.firstinspires.ftc.teamcode6032.drive.Pos;
+import org.firstinspires.ftc.teamcode6032.drive.Vec;
 
+@Deprecated
 public class AssertPosCommand extends PathCommand {
-    private final Pos pos;
+    private final Vec pos;
 
-    public AssertPosCommand(Pos pos) {
+    public AssertPosCommand(Vec pos) {
         this.pos = pos;
     }
 

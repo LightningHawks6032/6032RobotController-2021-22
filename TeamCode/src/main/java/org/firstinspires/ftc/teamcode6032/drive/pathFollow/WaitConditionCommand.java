@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode6032.drive.pathFollow;
 
 import org.firstinspires.ftc.teamcode6032.util.PollCallback;
 
+@Deprecated
 public class WaitConditionCommand extends PathCommand {
     private PollCallback<Boolean> callback;
 

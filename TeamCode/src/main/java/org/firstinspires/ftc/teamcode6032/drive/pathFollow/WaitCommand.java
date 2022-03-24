@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode6032.drive.pathFollow;
 
+@Deprecated
 public class WaitCommand extends PathCommand {
     private double startTime;
     private final double delay;

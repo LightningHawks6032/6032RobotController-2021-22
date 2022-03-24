@@ -1,4 +1,7 @@
-package org.firstinspires.ftc.teamcode6032.hardware;
+package org.firstinspires.ftc.teamcode6032.hardware.subassembelyControl;
+
+import org.firstinspires.ftc.teamcode6032.hardware.HardwareManager;
+import org.firstinspires.ftc.teamcode6032.hardware.wrapper.DCMotorWrapper;
 
 public class GrabberArm {
     private static final boolean LIFTER_REVERSE = false;

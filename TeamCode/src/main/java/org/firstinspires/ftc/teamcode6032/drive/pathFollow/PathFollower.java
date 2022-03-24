@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.teamcode6032.drive.pathFollow;
 
-import org.firstinspires.ftc.teamcode6032.drive.Pos;
+import org.firstinspires.ftc.teamcode6032.drive.Vec;
 import org.firstinspires.ftc.teamcode6032.drive.PosIntegrator;
 import org.firstinspires.ftc.teamcode6032.drive.RobotTargetMover;
-import org.firstinspires.ftc.teamcode6032.hardware.MechanamMotors;
+import org.firstinspires.ftc.teamcode6032.hardware.subassembelyControl.core.MechanamMotors;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class PathFollower {
     private double time;
     protected final RobotTargetMover targetMover;
@@ -67,7 +68,7 @@ public class PathFollower {
         return commands.isEmpty();
     }
 
-    public void assertPosition(Pos pos) {
+    public void assertPosition(Vec pos) {
         targetMover.integrator.setCurrentPos(pos);
     }
 }

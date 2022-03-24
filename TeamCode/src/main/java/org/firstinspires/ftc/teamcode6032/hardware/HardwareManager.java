@@ -5,7 +5,13 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode6032.drive.Pos;
+import org.firstinspires.ftc.teamcode6032.drive.Vec;
+import org.firstinspires.ftc.teamcode6032.hardware.subassembelyControl.core.MechanamMotors;
+import org.firstinspires.ftc.teamcode6032.hardware.subassembelyControl.core.OdometryWheels;
+import org.firstinspires.ftc.teamcode6032.hardware.wrapper.CRServoWrapper;
+import org.firstinspires.ftc.teamcode6032.hardware.wrapper.DCMotorWrapper;
+import org.firstinspires.ftc.teamcode6032.hardware.wrapper.DeadWheelWrapper;
+import org.firstinspires.ftc.teamcode6032.hardware.wrapper.ServoWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +20,7 @@ public class HardwareManager {
     // TODO: track motor information
 
     public List<IMotorInfo> motorInfoList = new ArrayList<>();
-    public List<DeadWheel> deadWheelList = new ArrayList<>();
+    public List<DeadWheelWrapper> deadWheelList = new ArrayList<>();
     public MechanamMotors mechanamMotors = null;
     public OdometryWheels odometryWheels = null;
 
@@ -39,12 +45,12 @@ public class HardwareManager {
         motorInfoList.add(motor);
         return motor;
     }
-    public DeadWheel getDeadWheel(String id, boolean reverse, double scale) {
-        DeadWheel motor = new DeadWheel(map.get(DcMotor.class, id),id,reverse,scale);
+    public DeadWheelWrapper getDeadWheel(String id, boolean reverse, double scale) {
+        DeadWheelWrapper motor = new DeadWheelWrapper(map.get(DcMotor.class, id),id,reverse,scale);
         deadWheelList.add(motor);
         return motor;
     }
-    public DeadWheel getDeadWheel(String id, boolean reverse) {
+    public DeadWheelWrapper getDeadWheel(String id, boolean reverse) {
         // 1 in radius omni wheel, 8192 ticks/rev.
         return  getDeadWheel(id,reverse,Math.PI*2f/8192f);
     }
@@ -53,7 +59,7 @@ public class HardwareManager {
             mechanamMotors =  new MechanamMotors(this,rotation);
         return mechanamMotors;
     }
-    public OdometryWheels getOdometry(Pos offset, double radius) {
+    public OdometryWheels getOdometry(Vec offset, double radius) {
         if (odometryWheels == null)
             odometryWheels = new OdometryWheels(this,offset,radius);
         else
