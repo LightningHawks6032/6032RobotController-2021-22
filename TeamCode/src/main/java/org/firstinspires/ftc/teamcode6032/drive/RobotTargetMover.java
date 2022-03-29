@@ -1,15 +1,20 @@
 package org.firstinspires.ftc.teamcode6032.drive;
 
+import androidx.core.math.MathUtils;
+
 import org.firstinspires.ftc.teamcode6032.hardware.subassembelyControl.core.MechanamMotors;
 
 public class RobotTargetMover {
     private static final boolean ORIGIN_IS_PREV_TARGET = true;
-    private static final double LINE_ATTRACT_POW = 0; // 2x as powerful as target attraction.
-    private static final double BRAKE_DIST = 16; // 16in
+    private static final double BRAKE_DIST = 12; // 12in
     private static final double BRAKE_DIST_R = 1; // 1rad (~120deg)
-    public static final double TARGET_DIST = .5; // .5in
-    public static final double TARGET_DIST_R = .075; // .075rad (~4deg)
-    public static final double MAX_ACC = 5.0; // 5.0 speed unit/sec
+    public static final double TARGET_DIST = 1; // 1in
+    public static final double TARGET_DIST_R = .15; // .15rad (~8deg)
+    public static final double MIN_POW = 0.1; // 0.1 speed
+    public static final double MIN_POW_R = 0.1; // 0.1 r-speed
+    public static final double MIN_POW_DIST = 0.5; // 0.5x TARGET_DIST
+    public static final double MIN_POW_DIST_R = 0.5; // 0.5x TARGET_DIST_R
+    public static final double MAX_ACC = 4.0; // 4.0 speed/sec
     public static final double MAX_ACC_R = Math.PI*2; // 2pi rad/s^2
 
     private Vec target = null;
@@ -48,10 +53,12 @@ public class RobotTargetMover {
 //                Pos.mul(toLine,LINE_ATTRACT_POW)
         );
 
-        double distT = Vec.locLen(toTarget)-TARGET_DIST;
-        double distR = Math.abs(toTarget.r)-TARGET_DIST_R;
-        double speedT = brake ? Math.min( 1, distT/BRAKE_DIST) : 1;
-        double speedR = brake ? Math.min( 1, distR/BRAKE_DIST_R) : 1;
+//        double distT = Vec.locLen(toTarget)-TARGET_DIST;
+//        double distR = Math.abs(toTarget.r)-TARGET_DIST_R;
+        double distT = Vec.locLen(toTarget) - TARGET_DIST*MIN_POW_DIST;
+        double distR = Math.abs(toTarget.r) - TARGET_DIST_R*MIN_POW_DIST_R;
+        double speedT = brake ? applyMinPow(distT/BRAKE_DIST, MIN_POW) : 1;
+        double speedR = brake ? applyMinPow(distR/BRAKE_DIST_R, MIN_POW_R) : 1;
 
         if (distT <= 0) speedT = 0;
         if (distR <= 0) speedR = 0;
@@ -64,9 +71,9 @@ public class RobotTargetMover {
         );
         Vec acc = Vec.mul(Vec.sub(newVel,vel),1.0/dt);
         acc = new Vec(
-                Math.min(Math.max(acc.x,-MAX_ACC),MAX_ACC),
-                Math.min(Math.max(acc.y,-MAX_ACC),MAX_ACC),
-                Math.min(Math.max(acc.r,-MAX_ACC_R),MAX_ACC_R)
+                MathUtils.clamp(acc.x,-MAX_ACC,MAX_ACC),
+                MathUtils.clamp(acc.y,-MAX_ACC,MAX_ACC),
+                MathUtils.clamp(acc.r,-MAX_ACC_R,MAX_ACC_R)
         );
         vel = Vec.add(vel, Vec.mul(acc,dt));
 
@@ -74,6 +81,10 @@ public class RobotTargetMover {
         mechanam.setPower(Vec.rot(Vec.minCutoff(vel,.075,.05),-pos.r,true));
     }
 
+    private double applyMinPow(double pow, double minPow) {
+        if (pow <= 0) return 0;
+        else return MathUtils.clamp(pow+minPow,MIN_POW,1);
+    }
 
     public boolean isWithinDistanceToTarget(double targetDist, double targetDistR) {
         Vec pos = integrator.currentPos;

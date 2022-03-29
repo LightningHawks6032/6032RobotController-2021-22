@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode6032.hardware;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode6032.drive.RobotTargetMover;
 import org.firstinspires.ftc.teamcode6032.drive.Vec;
 import org.firstinspires.ftc.teamcode6032.drive.PosIntegrator;
@@ -17,8 +18,11 @@ public class HardwareCommon {
     public final RobotTargetMover targetMover;
 
     private final GeneratorFn<Double> getTimeFn;
+    private final GeneratorFn<Boolean> getStoppedFn;
 
-    public HardwareCommon(HardwareMap hardwareMap, GeneratorFn<Double> getTimeFn) {
+    public final Telemetry telemetry;
+
+    public HardwareCommon(HardwareMap hardwareMap, Telemetry telemetry, GeneratorFn<Double> getTimeFn, GeneratorFn<Boolean> getStoppedFn) {
         hardware = new HardwareManager(hardwareMap);
         mechanam = hardware.getMechanam(0);
         odometry = hardware.getOdometry(new Vec(0f,0f,0f), 5.125f);
@@ -26,9 +30,15 @@ public class HardwareCommon {
         targetMover = new RobotTargetMover(posIntegrator, mechanam);
 
         this.getTimeFn = getTimeFn;
+        this.getStoppedFn = getStoppedFn;
+
+        this.telemetry = telemetry;
     }
 
     public double time() {
         return getTimeFn.get();
+    }
+    public boolean isStopped() {
+        return getStoppedFn.get();
     }
 }

@@ -11,7 +11,7 @@ public class AutoContext {
 
         hardware = runner.hardware;
     }
-    public void await(AwaitConditionFn condition) {
+    public void await(AwaitConditionFn condition) throws InterruptedException {
         await.until(condition);
     }
 

@@ -13,9 +13,16 @@ public class AssistedDriveTeleop extends OpMode {
 
     @Override
     public void init() {
-        hardware = new HardwareCommon(hardwareMap, this::getRuntime);
+        hardware = new HardwareCommon(hardwareMap, telemetry, this::getRuntime, ()->stopped);
 
         hardware.posIntegrator.setCurrentPos(Vec.ORIGIN);
+    }
+
+    public boolean stopped = false;
+    @Override
+    public void stop() {
+        super.stop();
+        stopped = true;
     }
 
     @Override

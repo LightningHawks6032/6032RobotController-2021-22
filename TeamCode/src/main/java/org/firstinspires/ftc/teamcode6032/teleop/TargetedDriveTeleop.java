@@ -1,13 +1,12 @@
 package org.firstinspires.ftc.teamcode6032.teleop;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode6032.drive.Vec;
 import org.firstinspires.ftc.teamcode6032.hardware.HardwareCommon;
 
 @TeleOp(name = "TargetedDrive")
-public class TargetedDriveTeleop extends OpMode {
+public class TargetedDriveTeleop extends ManualOpMode {
 
     HardwareCommon hardware;
 
@@ -15,7 +14,7 @@ public class TargetedDriveTeleop extends OpMode {
 
     @Override
     public void init() {
-        hardware = new HardwareCommon(hardwareMap, this::getRuntime);
+        hardware = new HardwareCommon(hardwareMap, telemetry, this::getRuntime, this::isStopRequested);
     }
 
     @Override

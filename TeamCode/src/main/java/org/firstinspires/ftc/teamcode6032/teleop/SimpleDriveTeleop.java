@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode6032.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode6032.drive.Vec;
@@ -9,13 +8,13 @@ import org.firstinspires.ftc.teamcode6032.hardware.HardwareCommon;
 
 @Disabled
 @TeleOp(name="SimpleDrive", group= TeleOpNames.TEST_GROUP)
-public class SimpleDriveTeleop extends OpMode {
+public class SimpleDriveTeleop extends ManualOpMode {
 
     HardwareCommon hardware;
 
     @Override
     public void init() {
-        hardware = new HardwareCommon(hardwareMap, this::getRuntime);
+        hardware = new HardwareCommon(hardwareMap, telemetry, this::getRuntime, this::isStopRequested);
     }
 
     @Override

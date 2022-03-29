@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode6032.drive.auto;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode6032.drive.Vec;
 
 /**
@@ -21,10 +22,10 @@ public class Aut {
 
     // -- positioning -- //
 
-    public static void goTo(AutoContext X, Vec pos) {
+    public static void goTo(AutoContext X, Vec pos) throws InterruptedException {
         goTo(X,pos,true);
     }
-    public static void goTo(AutoContext X, Vec pos, boolean brake) {
+    public static void goTo(AutoContext X, Vec pos, boolean brake) throws InterruptedException {
         X.hardware.targetMover.setTarget(pos,brake);
         X.await(X.hardware.targetMover::isWithinDistanceToTarget);
     }
@@ -42,15 +43,15 @@ public class Aut {
 
     ///// ＿＿＿＿＿ / TIMING AND WAITING HELPERS / ＿＿＿＿＿＿ /////
 
-    public static void wait(AutoContext X, double delay) {
+    public static void wait(AutoContext X, double delay) throws InterruptedException {
         double now = X.hardware.time();
         waitAbsolute(X,now + delay);
     }
-    public static void waitAbsolute(AutoContext X, double time) {
+    public static void waitAbsolute(AutoContext X, double time) throws InterruptedException {
         X.await(()->(X.hardware.time() > time));
     }
 
-    public static void waitNLoops(AutoContext X, int loops) {
+    public static void waitNLoops(AutoContext X, int loops) throws InterruptedException {
         X.await(new AwaitConditionFn() {
             int n = 0;
             @Override public boolean canContinue() {
@@ -58,8 +59,16 @@ public class Aut {
             }
         });
     }
-    public static void waitOneLoop(AutoContext X) {
+    public static void waitOneLoop(AutoContext X) throws InterruptedException {
         waitNLoops(X,1);
     }
 
+
+    ///// ＿＿＿＿＿ / Telemetry and Logging / ＿＿＿＿＿＿ /////
+
+    public static void setLine(AutoContext X, String ln) {
+        Telemetry tele = X.hardware.telemetry;
+        tele.addLine(ln);
+        tele.update();
+    }
 }

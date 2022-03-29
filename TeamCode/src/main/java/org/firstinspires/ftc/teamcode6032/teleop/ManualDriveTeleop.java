@@ -1,19 +1,18 @@
 package org.firstinspires.ftc.teamcode6032.teleop;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode6032.drive.Vec;
 import org.firstinspires.ftc.teamcode6032.hardware.HardwareCommon;
 
 @TeleOp(name = "Drive")
-public class ManualDriveTeleop extends OpMode {
+public class ManualDriveTeleop extends ManualOpMode {
 
     HardwareCommon hardware;
 
     @Override
     public void init() {
-        hardware = new HardwareCommon(hardwareMap, this::getRuntime);
+        hardware = new HardwareCommon(hardwareMap, telemetry, this::getRuntime, this::isStopRequested);
 
     }
 
