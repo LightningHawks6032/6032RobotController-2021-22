@@ -21,7 +21,7 @@ public class OdometryWheels {
     private double pl = 0;
     private double pr = 0;
 
-    private Vec deltaPos = Vec.ORIGIN;
+    private Vec deltaPos = Vec.ZERO;
 
 
     public OdometryWheels(HardwareManager hardwareManager, Vec offsetIn, double radiusIn) {

@@ -8,7 +8,7 @@ public class PosIntegrator {
 //    public Pos ODO_DELTA_SCALE = new Pos(24.0/27.3,24.0/23.9,10.0/10.3);//TODO
     public Vec ODO_DELTA_SCALE = new Vec(1,1,10.0/10.3);//TODO
 
-    public Vec currentPos = Vec.ORIGIN;
+    public Vec currentPos = Vec.ZERO;
     public OdometryWheels wheels;
 
     private void addDelta(Vec delta) {

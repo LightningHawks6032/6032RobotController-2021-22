@@ -15,6 +15,7 @@ public class TargetedDriveTeleop extends ManualOpMode {
     @Override
     public void init() {
         hardware = new HardwareCommon(hardwareMap, telemetry, this::getRuntime, this::isStopRequested);
+        hardware.posIntegrator.setCurrentPos(Vec.ZERO);
     }
 
     @Override

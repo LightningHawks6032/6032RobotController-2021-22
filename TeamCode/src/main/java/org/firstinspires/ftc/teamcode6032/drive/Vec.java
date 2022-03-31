@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode6032.drive;
 
 
 public class Vec {
-    public static final Vec ORIGIN = new Vec(0,0,0);
+    public static final Vec ZERO = new Vec(0,0,0);
 
     public final double x;
     public final double y;
@@ -38,7 +38,7 @@ public class Vec {
     }
     public static Vec normLoc(Vec p) {
         double len = locLen(p);
-        if (len < 0.001) return Vec.ORIGIN;
+        if (len < 0.001) return Vec.ZERO;
         return mul(p,1/len);
     }
     public static Vec normMechanam(Vec p) {

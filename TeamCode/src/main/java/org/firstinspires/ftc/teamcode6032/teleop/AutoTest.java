@@ -29,9 +29,9 @@ public class AutoTest extends LinearOpMode {
 
         Aut.assertPos(X,new Vec(0,0,0));
         Aut.setLine(X, "a");
-        Aut.goTo(X,new Vec(0,48,0));
+        Aut.goTo(X,new Vec(0,12*6,0));
         Aut.setLine(X, "b");
-        Aut.goTo(X,new Vec(0,36,Math.PI/2));
+        Aut.goTo(X,new Vec(0,12*5,Math.PI));
         Aut.setLine(X, "c");
 
         Aut.wait(X,1.0);

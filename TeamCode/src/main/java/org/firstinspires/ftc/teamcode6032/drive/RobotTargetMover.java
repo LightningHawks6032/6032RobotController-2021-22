@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode6032.hardware.subassembelyControl.core.Mech
 
 public class RobotTargetMover {
     private static final boolean ORIGIN_IS_PREV_TARGET = true;
-    private static final double BRAKE_DIST = 12; // 12in
+    private static final double BRAKE_DIST = 20; // 1ft 8 in
     private static final double BRAKE_DIST_R = 1; // 1rad (~120deg)
     public static final double TARGET_DIST = 1; // 1in
     public static final double TARGET_DIST_R = .15; // .15rad (~8deg)
@@ -18,7 +18,7 @@ public class RobotTargetMover {
     public static final double MAX_ACC_R = Math.PI*2; // 2pi rad/s^2
 
     private Vec target = null;
-    private Vec vel = Vec.ORIGIN;
+    private Vec vel = Vec.ZERO;
     private boolean brake = true;
 
     private Vec origin = null;
@@ -38,7 +38,7 @@ public class RobotTargetMover {
     }
     public void update(double dt) {
         if (target == null) {
-            mechanam.setPower(Vec.ORIGIN);
+            mechanam.setPower(Vec.ZERO);
             return;
         }
 
