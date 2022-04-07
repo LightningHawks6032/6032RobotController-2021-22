@@ -13,7 +13,7 @@ public class InputTest extends LinearOpMode {
         DBugData a = new DBugData("A",0);
         DBugData b = new DBugData("B",true);
         DBugData c = new DBugData("C",0.2,2);
-        DBugInput i = new DBugInput(telemetry,gamepad1,a,b);
+        DBugInput i = new DBugInput(telemetry,gamepad1,a,b,c);
 
         i.run(this::isStopRequested);
 

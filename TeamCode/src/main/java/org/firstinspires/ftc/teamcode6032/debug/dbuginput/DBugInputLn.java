@@ -68,7 +68,7 @@ public class DBugInputLn {
                     g.append((int)(vd / Math.pow(10, i)) % 10);
                     if (i == digitFocused) g.append("]");
                 }
-                return renderFocusedFinalize("");
+                return renderFocusedFinalize(g.toString());
             case BOOL:
                 boolean vb = data.valueB;
                 return renderFocusedFinalize(
